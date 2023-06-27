@@ -1,10 +1,15 @@
+import { Route, Routes } from 'react-router-dom'
 import './App.css'
-import HomePage from './app/pages/homepage/HomePage'
+import HomePage from './app/pages/HomePage'
+import Layout from './app/pages/Layout'
 
 function App() {
 
   return (
-      <HomePage/>
+    <Routes>
+      <Route path="/" element={<Layout/>} />
+        <Route index element={<HomePage />} />
+    </Routes>
   )
 }
 

@@ -1,10 +1,10 @@
-import equalTravelLogo from '../../assets/equal-travel-white-transparent.png'
+import equalTravelLogo from '../../assets/img/equal-travel-white-transparent.png'
 
-function AppLogo(){
+export default function AppLogo(props){
+
     return(
         <div>
-            <img src={equalTravelLogo} height={75} className="logo" alt="Equal Travel logo" />
+            <img src={equalTravelLogo} height={props.logoHeight} className="logo" alt="Equal Travel logo" />
         </div>
     )
 }
-export default AppLogo;
