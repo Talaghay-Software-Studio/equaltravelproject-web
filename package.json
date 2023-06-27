@@ -14,9 +14,11 @@
     "@emotion/styled": "^11.11.0",
     "@fontsource/montserrat": "^5.0.1",
     "@mui/icons-material": "^5.11.16",
-    "@mui/material": "^5.13.3",
+    "@mui/material": "^5.13.4",
+    "@mui/styles": "^5.13.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.12.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",
