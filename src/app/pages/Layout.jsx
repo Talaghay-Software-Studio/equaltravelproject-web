@@ -1,10 +1,11 @@
 import { ThemeProvider } from "@mui/material/styles";
+import { useState } from "react";
 import AppHeader from "../components/AppHeader";
 import BackToTop from "../components/BackToTop";
 import Footer from "../components/Footer";
 import Newsletter from "../components/Newsletter";
 import theme from "../styles/theme"
-import { useState } from "react";
+import AuthModal from "../pages/modals/AuthModal"
 
 export default function Layout(props) {
     const [showAuth, setShowAuth] = useState(false);
@@ -24,9 +25,13 @@ export default function Layout(props) {
             showAuthModal={(bool) => showAuthModal(bool)}
           />
 
+          <AuthModal
+            showAuth={showAuth}
+            showAuthModal={(bool) => showAuthModal(bool)}
+          />
+
           <div style={{ marginTop: props.topMargin ? "85px" : "0px" }}>
-            {" "}
-            {props.children}{" "}
+            {props.children}
           </div>
 
           <div style={{ marginTop: "auto" }}>
