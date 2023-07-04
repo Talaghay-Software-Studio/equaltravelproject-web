@@ -13,28 +13,42 @@ const propertySections = ["Latest on the Property Listing", "Nearby Listed Prope
 export default function HomePage(){
     return (
       <Layout topMargin={false} appBarStyle="dynamic">
-        <div
-          style={{
+        <Grid
+          sx={{
             display: "flex",
             flexDirection: "column",
             height: "max-content",
-            backgroundImage: `url(${HompageBanner})`,
-            backgroundSize: "contain",
-            backgroundRepeat: "no-repeat",
           }}
         >
-          <Grid sx={{ display: "flex", flexDirection: "column", flexGrow: 1 }}>
+          <Grid
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              flexGrow: 1,
+              "&::before": {
+                content: `''`,
+                minHeight: "680px",
+                backgroundRepeat: "no-repeat",
+                backgroundSize: "cover",
+                backgroundPosition: "bottom",
+                backgroundImage: `linear-gradient(rgba(0, 0, 0, .5), rgba(0, 0, 0, .5)), url(${HompageBanner})`,
+                position: "relative",
+              },
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
-                justifyContent: "center",
                 height: "23%",
-                backgroundSize: "cover",
+                minHeight: "680px",
+                width: "-webkit-fill-available",
                 overflow: "hidden",
-                minHeight: "658px",
+                position: "absolute",
               }}
             >
-              <FindProperty />
+              <Grid sx={{ display: "flex", justifyContent: "center", flexGrow: 1, margin: "20px 130px 8%" }}>
+                <FindProperty />
+              </Grid>
             </Box>
             <Grid
               sx={{
@@ -253,7 +267,7 @@ export default function HomePage(){
               </Grid>
             </Grid>
           </Grid>
-        </div>
+        </Grid>
       </Layout>
     );
 }

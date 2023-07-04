@@ -25,7 +25,8 @@ export const theme = createTheme({
 
     button: {
       textTransform: "capitalize",
-      borderRadius: "30px"
+      borderRadius: "30px",
+      fontWeight: 600
 
     },
     grid: {
