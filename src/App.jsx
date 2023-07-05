@@ -6,6 +6,7 @@ import PrivacyPolicy from './app/pages/links/PrivacyPolicy';
 import TermsAndConditions from './app/pages/links/TermsAndConditions';
 import WebAccessibility from './app/pages/links/WebAccessibility';
 import Disclaimer from './app/pages/links/Disclaimer';
+import SearchPage from './app/pages/SearchPage'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         element={<WebAccessibility />}
       />
       <Route path="/disclaimer" element={<Disclaimer />} />
+      <Route path="/search-results" element={<SearchPage />} />
     </Routes>
   );
 }
