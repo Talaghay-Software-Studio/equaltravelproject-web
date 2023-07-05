@@ -45,7 +45,6 @@ export default function FindProperty(){
           justifyContent: "center",
           alignSelf: "end",
           color: "white",
-          margin: "20px 20px 8%",
         }}
       >
         <Grid sx={{ display: "flex", paddingLeft: "25px" }}>

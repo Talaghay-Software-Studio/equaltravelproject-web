@@ -24,14 +24,22 @@ const menu = ["Login/Sign Up", "Help Center"];
 
 const useStyles = makeStyles(() => ({
   appBarTransparent: {
-    background: "transparent !important",
+    backgroundColor: "transparent !important",
     boxShadow: "none !important",
   },
   appBarPrimary: {
-    background: "#3B79C9 !important",
+    backgroundColor: "#3B79C9 !important",
     boxShadow: "unset !important",
   },
-  hostButton: {
+  blueHostButton: {
+    background: "#3B79C9  !important",
+    color: "#FFFFFF !important",
+    "&:hover": {
+      background: "#3B79C9  !important",
+      color: "#FFFFFF !important",
+    },
+  },
+  whiteButton: {
     background: "#FFFFFF !important",
     color: "3B79C9 !important",
     "&:hover": {
@@ -45,7 +53,19 @@ export default function AppHeader(props) {
   const isAppBarDynamic = props.appBarStyle == "dynamic";
   const compStyles = useStyles();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [appBarColored, setAppBarColored] = React.useState(false);
   
+  const changeAppBarBG = () => {
+    if(window.scrollY >= 80){
+      setAppBarColored(true);
+      
+    } else {
+      setAppBarColored(false);
+    }
+  }
+
+  window.addEventListener("scroll", changeAppBarBG);
+
   const handleOpenUserMenu = (event) => {
     setAnchorElUser(event.currentTarget);
   };
@@ -54,15 +74,13 @@ export default function AppHeader(props) {
     setAnchorElUser(null);
   };
 
-  const handleOpenMenuItem = (event) => {
-    console.log("Menu: ", event);
+  const handleOpenMenuItem = () => {
     setAuthModal(true);
 
     handleCloseUserMenu();
   };
 
   const setAuthModal = (bool) => {
-    console.log("Inside App Header: ", bool);
     props.showAuthModal(bool);
   };
   return (
@@ -70,7 +88,11 @@ export default function AppHeader(props) {
       <AppBar
         position="fixed"
         classes={{
-          paper: `${isAppBarDynamic} ? ${compStyles.appBarTransparent} : ${compStyles.appBarPrimary}`,
+          root: isAppBarDynamic
+            ? appBarColored
+              ? compStyles.appBarPrimary
+              : compStyles.appBarTransparent
+            : compStyles.appBarPrimary,
         }}
       >
         <Toolbar disableGutters sx={{ margin: "0px 40px 0px 32px" }}>
@@ -100,11 +122,15 @@ export default function AppHeader(props) {
               mx: 2,
               padding: "11px 25px",
             }}
-            classes={{ root: compStyles.hostButton }}
+            classes={{
+              root: isAppBarDynamic
+                ? appBarColored
+                  ? compStyles.whiteButton
+                  : compStyles.blueHostButton
+                : compStyles.whiteButton,
+            }}
           >
-            <Typography sx={{ textTransform: "initial" }}>
-              {`Become A Host`}
-            </Typography>
+            {`Become A Host`}
           </Button>
 
           <Box
