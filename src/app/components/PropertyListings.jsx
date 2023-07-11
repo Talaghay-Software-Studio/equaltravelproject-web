@@ -6,9 +6,9 @@ export default function PropertyListings(props){
         let pc = [];
 
         for (let i = 1; i <= props.propertyCount; i++) {
-            let bgUrl = '/src/assets/img/properties/{0}.png';
+            let bgUrl = '/assets/img/properties/{0}.png';
             let bgNum = Math.floor(Math.random() * (8 - 2)) + 1; //min: 1, max: 8
-            let avatarUrl = '/src/assets/img/building/{0}.png';
+            let avatarUrl = '/assets/img/building/{0}.png';
             let avatarNum = Math.floor(Math.random() * (4 - 2)) + 1; //min: 1, max: 4
             let isRated = props.title == "Top Rated Properties";
             let isPriced = props.title == "Featured Properties on our Listing";

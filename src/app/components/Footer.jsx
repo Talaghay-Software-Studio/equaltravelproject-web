@@ -1,8 +1,8 @@
 import { Divider, Grid, Typography } from "@mui/material";
-import FBIcon from "../../assets/icons/svg/fb.svg";
-import TwitterIcon from '../../assets/icons/svg/twitter.svg';
-import InstaIcon from '../../assets/icons/svg/insta.svg';
-// import LinkedinIcon from '../../assets/icons/svg/linkedin.svg';
+import FBIcon from "/assets/icons/svg/fb.svg";
+import TwitterIcon from "/assets/icons/svg/twitter.svg";
+import InstaIcon from "/assets/icons/svg/insta.svg";
+// import LinkedinIcon from '/assets/icons/svg/linkedin.svg';
 import AppLogo from "./AppLogo";
 
 const companyLinks = ["About Us", "Legal Information", "Contact Us", "Blogs"];

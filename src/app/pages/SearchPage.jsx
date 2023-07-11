@@ -1,7 +1,7 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import Layout from "./Layout";
 import PropertyCard from "../components/PropertyCard";
-import MapImage from "./../../assets/img/map.svg"
+import MapImage from "/assets/icons/svg/map.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 import PropertyFocusCard from "../components/PropertyFocusCard";
@@ -16,9 +16,9 @@ export default function SearchPage(){
       let pc = [];
 
       for (let i = 1; i <= 7; i++) {
-        let bgUrl = "/src/assets/img/properties/{0}.png";
+        let bgUrl = "/assets/img/properties/{0}.png";
         let bgNum = Math.floor(Math.random() * (8 - 2)) + 1; //min: 1, max: 8
-        let avatarUrl = "/src/assets/img/building/{0}.png";
+        let avatarUrl = "/assets/img/building/{0}.png";
         let avatarNum = Math.floor(Math.random() * (4 - 2)) + 1; //min: 1, max: 4
 
         pc.push(

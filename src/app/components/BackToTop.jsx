@@ -1,6 +1,6 @@
 
 import { Fab, Zoom, useScrollTrigger } from "@mui/material";
-import BackToTopSvg from "../../assets/icons/svg/back-to-top.svg";
+import BackToTopSvg from "/assets/icons/svg/back-to-top.svg";
 
 const style = {
   position: `fixed`,

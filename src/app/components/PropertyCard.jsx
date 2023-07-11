@@ -7,22 +7,22 @@ import makeStyles from "@mui/styles/makeStyles";
 const bottomIcons = [
   {
     name: "bed",
-    path: "/src/assets/icons/svg/bed.svg",
+    path: "/assets/icons/svg/bed.svg",
     count: 3,
   },
   {
     name: "bath",
-    path: "/src/assets/icons/svg/bath.svg",
+    path: "/assets/icons/svg/bath.svg",
     count: 2,
   },
   {
     name: "car",
-    path: "/src/assets/icons/svg/car.svg",
+    path: "/assets/icons/svg/car.svg",
     count: 1,
   },
   {
     name: "pet",
-    path: "/src/assets/icons/svg/pet.svg",
+    path: "/assets/icons/svg/pet.svg",
     count: 2,
   },
 ];

@@ -1,4 +1,4 @@
-import equalTravelLogo from '../../assets/img/equal-travel-white-transparent.png'
+import equalTravelLogo from "/assets/img/equal-travel-white-transparent.png";
 
 export default function AppLogo(props){
 

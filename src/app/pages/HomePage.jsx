@@ -1,9 +1,9 @@
 
 import { Box, Button, Grid, Typography } from "@mui/material";
-import HompageBanner from "../../assets/img/homepage-banner.jpg"
-import BackgroundImage1 from "../../assets/img/hosting-bg.jpg"
-import BackgroundImage2 from "../../assets/img/browse-properties.png";
-import BackgroundImage3 from "../../assets/img/12.png";
+import HompageBanner from "/assets/img/homepage-banner.jpg";
+import BackgroundImage1 from "/assets/img/hosting-bg.png";
+import BackgroundImage2 from "/assets/img/browse-properties.png";
+import BackgroundImage3 from "/assets/img/12.png";
 import FindProperty from "../components/FindProperty";
 import PropertyListings from "../components/PropertyListings";
 import Layout from "./Layout";

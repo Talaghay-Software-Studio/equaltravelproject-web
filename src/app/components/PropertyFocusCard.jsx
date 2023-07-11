@@ -3,22 +3,22 @@ import { Box, Card, CardContent, CardMedia, Grid, Typography } from "@mui/materi
 const bottomIcons = [
   {
     name: "bed",
-    path: "/src/assets/icons/svg/bed.svg",
+    path: "/assets/icons/svg/bed.svg",
     count: 3,
   },
   {
     name: "bath",
-    path: "/src/assets/icons/svg/bath.svg",
+    path: "/assets/icons/svg/bath.svg",
     count: 2,
   },
   {
     name: "car",
-    path: "/src/assets/icons/svg/car.svg",
+    path: "/assets/icons/svg/car.svg",
     count: 1,
   },
   {
     name: "pet",
-    path: "/src/assets/icons/svg/pet.svg",
+    path: "/assets/icons/svg/pet.svg",
     count: 2,
   },
 ];
@@ -28,7 +28,7 @@ export default function PropertyFocusCard() {
         <CardMedia
           component="img"
           sx={{ width: 200, height: 150 }}
-          image="/src/assets/img/properties/1.png"
+          image="/assets/img/properties/1.png"
           alt="Property image"
         />
         <Box sx={{ display: "flex", flexDirection: "column" }}>

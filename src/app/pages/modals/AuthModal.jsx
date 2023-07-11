@@ -5,7 +5,7 @@ import {
 } from "@mui/material";
 import makeStyles from "@mui/styles/makeStyles";
 import CloseIcon from "@mui/icons-material/Close";
-import BackIcon from "../../../assets/icons/svg/back.svg";
+import BackIcon from "/assets/icons/svg/back.svg";
 import React from "react";
 import Snackbar from "@mui/material/Snackbar";
 import MuiAlert from "@mui/material/Alert";

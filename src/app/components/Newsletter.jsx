@@ -4,7 +4,7 @@ import {
     TextField, 
     Typography 
 } from "@mui/material";
-import SendIcon from "../../assets/icons/svg/send-round.svg"
+import SendIcon from "/assets/icons/svg/send-round.svg";
 
 export default function Newsletter(){
     return (
