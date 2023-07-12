@@ -12,7 +12,11 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Formik } from "formik";
 import LoadingScreen from "../../components/LoadingScreen";
 import React from "react";
+import axios from "axios";
 
+const api = axios.create({
+  baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
+});
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -54,43 +58,41 @@ export default function ForgotPassword(props) {
   const compStyles = useStyles();
   const [isLoading, setIsLoading] = React.useState(false);
 
-
   const submitForm = async (values) => {
-
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/v1/login/forgotpassword", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+    setIsLoading(true);
+    api
+      .post(
+        "/api/v1/forgotpassword",
+        {
           email_add: values.email,
-        }),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        // Handle the API response
+        setIsLoading(false);
+        if (response.status == 200) {
+          handleForgotPassword("success",
+            "Reset password link sent to email. Check Spam if not seen on inbox."
+          );
+        }
+      })
+      .catch((error) => {
+
+        // Handle the API error
+        setIsLoading(false);
+        if (error.response["data"]["error"] == "User not found") {
+          handleForgotPassword("error","User not found.");
+        }
       });
-
-      if (response.ok) {
-        setIsLoading(false);
-        //const data = await response.json();
-
-        // Handle successful login
-        handleForgotPassword(
-          "Reset password link sent to email. Check Spam if not seen on inbox."
-        );
-
-      } else {
-        // Handle error
-        setIsLoading(false);
-        handleForgotPassword("Email not found.");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Error occurred during login:", error);
-    }
   };
 
-  const handleForgotPassword = (message) => {
-    props.handleForgotPassword(message);
+  const handleForgotPassword = (status, message) => {
+    props.handleForgotPassword(status, message);
   };
 
   return (

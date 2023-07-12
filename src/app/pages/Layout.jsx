@@ -9,9 +9,20 @@ import AuthModal from "../pages/modals/AuthModal"
 
 export default function Layout(props) {
     const [showAuth, setShowAuth] = useState(false);
+    const [userAvatar, setUserAvatar] = useState("");
+
     const showAuthModal = (show) => {
       setShowAuth(show);
     };
+
+    const setAvatar = (isLoggedIn, initials) => {
+      if(isLoggedIn){
+        setUserAvatar(initials);
+      }
+      else{
+        setUserAvatar("");
+      }
+    }
 
     return (
       <ThemeProvider theme={theme}>
@@ -21,6 +32,7 @@ export default function Layout(props) {
         >
           <AppHeader
             appBarStyle={props.appBarStyle}
+            userAvatar={userAvatar}
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
           />
@@ -28,6 +40,7 @@ export default function Layout(props) {
           <AuthModal
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
+            setAvatar={(bool, initials) => setAvatar(bool, initials)}
           />
 
           <div style={{ marginTop: props.topMargin ? "85px" : "0px" }}>

@@ -51,6 +51,8 @@ const useStyles = makeStyles(() => ({
 
 export default function AppHeader(props) {
   const isAppBarDynamic = props.appBarStyle == "dynamic";
+  const userAvatar = props.userAvatar;
+
   const compStyles = useStyles();
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [appBarColored, setAppBarColored] = React.useState(false);
@@ -155,11 +157,21 @@ export default function AppHeader(props) {
               </IconButton>
             </Tooltip>
             <IconButton sx={{ p: 0 }}>
-              <Avatar
-                alt="User Profile Icon"
-                src=""
-                sx={{ width: 37, height: 37, bgcolor: "#3B79C9" }}
-              />
+              {!userAvatar && (
+                <Avatar
+                  alt="User Profile Icon"
+                  src=""
+                  sx={{ width: 37, height: 37, bgcolor: "#3B79C9" }}
+                />
+              )}
+              {userAvatar && (
+                <Avatar
+                  alt="User Profile Icon"
+                  sx={{ width: 37, height: 37, bgcolor: "#9A9A9A" }}
+                >
+                  {userAvatar}
+                </Avatar>
+              )}
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}

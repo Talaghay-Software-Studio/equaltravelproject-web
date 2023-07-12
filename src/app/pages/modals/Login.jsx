@@ -15,6 +15,11 @@ import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Formik } from "formik";
 import React from "react";
 import LoadingScreen from "../../components/LoadingScreen";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
+});
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -66,39 +71,42 @@ export default function Login(props) {
   };
 
   const submitForm = async (values) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/v1/login", {
-        method: "POST",
+    setIsLoading(true);
+    api.post("/api/v1/login", {
+        email_add: props.email,
+        password: values.password
+      }, {
         headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email_add: props.email,
-          password: values.password
-        }),
-      });
+        "Content-Type": "application/json",
+        }
+      }).then((response) => {
+        // Handle the API response
+        setIsLoading(false);
+        if (response.data["message"] == "Login successful") {
+          setIsLoading(false);
+          const userInitials = handleUserInitials(response.data["userDetails"][0]);
+          handleUserLogin("success", userInitials);
+        }
+      })
+      .catch((error) => {
 
-      if (response.ok) {
-        
-        // const data = await response.json();
-        // Handle successful login
+        // Handle the API error
         setIsLoading(false);
-        handleUserLogin("success");
-      } else {
-        // Handle login error
-        setIsLoading(false);
-        handleUserLogin("error");
-        console.error("Login failed");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Error occurred during login:", error);
-    }
+        if (error.response["data"] == "Invalid password") {
+          setIsLoading(false);
+          handleUserLogin("error", "");
+        }
+      });
   };
 
-  const handleUserLogin = (status) => {
-    props.handleUserLogin(status);
+
+  const handleUserInitials = (userDetails) => {
+    const initials = userDetails["first_name"][0] + userDetails["last_name"][0];
+    return initials;
+  }
+
+  const handleUserLogin = (status, initials) => {
+    props.handleUserLogin(status, initials);
   }
   
   return (
