@@ -52,7 +52,7 @@ const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function AuthModal({ showAuth, showAuthModal }) {
+export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
   let dialogContent = null;
   const compStyles = useStyles();
   const [dialogType, setDialogType] = React.useState("default");
@@ -147,7 +147,8 @@ export default function AuthModal({ showAuth, showAuthModal }) {
     });
   }
 
-  const handleUserLogin = (status) => {
+  const handleUserLogin = (status, userInitials) => {
+    const isLoggedIn = status == "success";
     if(status == "success"){
       handleOpenAuthSnackbar("success", "Login successful!");
       handleCloseModal();
@@ -157,16 +158,24 @@ export default function AuthModal({ showAuth, showAuthModal }) {
     } else {
       handleOpenAuthSnackbar("error", "Invalid password.");
     }
+    setAvatar(isLoggedIn, userInitials);
   }
 
-  const handleForgotPassword = (message) => {
-    handleOpenAuthSnackbar("success", message);
+  const handleForgotPassword = (status, message) => {
+    if(status == "success"){
+      handleOpenAuthSnackbar("success", message);
+    }
+    else if (status == "error"){
+      handleOpenAuthSnackbar("error", message);
+    }
+
     handleCloseModal();
   }
 
-  const handleUserSignup = (status) => {
+  const handleUserSignup = (status, email) => {
     if (status == "success") {
       handleOpenAuthSnackbar("success", "Account creation successful!");
+      handleFormChange("email", email);
       changeDialogType("login");
     } else {
       handleOpenAuthSnackbar("error", "Something went wrong");
@@ -178,7 +187,9 @@ export default function AuthModal({ showAuth, showAuthModal }) {
     dialogContent = (
       <Login
         email={formState.email}
-        handleUserLogin={(status) => handleUserLogin(status)}
+        handleUserLogin={(status, userInitials) =>
+          handleUserLogin(status, userInitials)
+        }
       />
     );
   }
@@ -186,14 +197,14 @@ export default function AuthModal({ showAuth, showAuthModal }) {
   // Sign up screen
   else if(dialogType === "signup") {
     dialogContent = (
-     <Signup email={formState.email} handleUserSignup={(status) => handleUserSignup(status)}/>
+     <Signup email={formState.email} handleUserSignup={(status, email) => handleUserSignup(status, email)}/>
     );
   } 
 
   // Forgot Password Screen
   else if (dialogType === "forgotPassword") {
     dialogContent = (
-      <ForgotPassword email={formState.email} handleForgotPassword={(messsage) => handleForgotPassword(messsage)}/>
+      <ForgotPassword email={formState.email} handleForgotPassword={(status, messsage) => handleForgotPassword(status, messsage)}/>
     );
   }
 

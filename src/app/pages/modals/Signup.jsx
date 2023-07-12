@@ -18,6 +18,11 @@ import { Formik } from "formik";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
 import LoadingScreen from "../../components/LoadingScreen";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
+});
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -63,6 +68,18 @@ const validate = (values) => {
   if (!values.lastName) {
     errors.lastName = "Last Name is required";
   }
+  //Birthdate
+  if (!values.birthdate) {
+    errors.birthdate = "Birthdate is required";
+  }
+  //Country
+  if (!values.country) {
+    errors.country = "Country is required";
+  }
+  //Phone
+  if (!values.phone) {
+    errors.phone = "Phone is required";
+  }
 
   // Email
   if (!values.email) {
@@ -74,25 +91,6 @@ const validate = (values) => {
   // Password
   if (!values.password) {
     errors.password = "Password is required";
-  }
-
-  if (values.password) {
-    // passwordCheck[0] =
-    //   values.password.toLowerCase().includes(values.firstName.toLowerCase()) ||
-    //   values.password.toLowerCase().includes(values.lastName.toLowerCase());
-    // passwordCheck[1] = values.password.length >= 8;
-    // passwordCheck[2] = symbolRegex.test(values.password);
-    // passwordCheck[0] =
-    //   values.password
-    //     .toString()
-    //     .toLowercase()
-    //     .contains(values.firstName.toString().toLowercase()) ||
-    //   values.password
-    //     .toString()
-    //     .toLowercase()
-    //     .includes(values.lastName.toString().toLowercase());
-    // passwordCheck[1] = values.password.length >= 8;
-    // passwordCheck[2] = symbolRegex.test(values.password);
   }
 
   // Confirm Password
@@ -134,14 +132,11 @@ export default function Login(props) {
   };
 
   const submitForm = async (values) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/v1/signup", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
+    setIsLoading(true);
+    api
+      .post(
+        "/api/v1/signup",
+        {
           first_name: values.firstName,
           last_name: values.lastName,
           birth_date: values.birthdate,
@@ -149,29 +144,32 @@ export default function Login(props) {
           phone_number: values.country,
           email_add: values.email,
           password: values.password,
-        }),
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      )
+      .then((response) => {
+        // Handle the API response
+        setIsLoading(false);
+        if (response.data["message"] == "User created successfully") {
+          handleUserSignup("success", values.email);
+        }
+      })
+      .catch((error) => {
+
+        // Handle the API error
+        setIsLoading(false);
+        if (error.response["data"] == "Error creating user") {
+          handleUserSignup("error", values.email);
+        }
       });
-
-      if (response.ok) {
-        //const data = await response.json();
-        // Handle successful signup
-        setIsLoading(false);
-        handleUserSignup("success");
-      } else {
-        setIsLoading(false);
-        handleUserSignup("error");
-
-        // Handle signup error
-        console.error("Signup failed");
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Error occurred during login:", error);
-    }
   };
 
-  const handleUserSignup = (status) => {
-    props.handleUserSignup(status);
+  const handleUserSignup = (status, email) => {
+    props.handleUserSignup(status, email);
   };
 
   return (
@@ -320,10 +318,11 @@ export default function Login(props) {
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "flex-end",
-                      ...(errors.birthdate && {
-                        border: "1px solid #D32F2F",
-                      }),
-                      ...(!errors.birthdate && {
+                      ...(errors.birthdate &&
+                        touched.birthdate && {
+                          border: "1px solid #D32F2F",
+                        }),
+                      ...(!(errors.birthdate && touched.birthdate) && {
                         border: "1px solid #9A9A9A",
                       }),
                     }}
@@ -333,9 +332,9 @@ export default function Login(props) {
                       id="birthdate"
                       name="birthdate"
                       value={values.birthdate}
-                      error={!!errors.birthdate}
-                      label="Birthdate"
-                      placeholder="Enter Your Birthdate"
+                      error={!!errors.birthdate && !!touched.birthdate}
+                      label="*Birthdate"
+                      placeholder="YYYY-MM-DD"
                       fullWidth
                       outline="none"
                       InputProps={{
@@ -376,11 +375,14 @@ export default function Login(props) {
                       flexDirection: "column",
                       justifyContent: "flex-start",
                       alignItems: "flex-end",
-                      ...(errors.country ||
-                        (errors.phone && {
-                          border: "1px solid #D32F2F",
-                        })),
-                      ...(!(errors.country || errors.phone) && {
+                      ...(((errors.country && touched.country) ||
+                        (errors.phone && touched.phone)) && {
+                        border: "1px solid #D32F2F",
+                      }),
+                      ...(!(
+                        (errors.country && touched.country) ||
+                        (errors.phone && touched.phone)
+                      ) && {
                         border: "1px solid #9A9A9A",
                       }),
                     }}
@@ -391,8 +393,8 @@ export default function Login(props) {
                       id="country"
                       name="country"
                       value={values.country}
-                      error={!!errors.country}
-                      label="Country/Region"
+                      error={!!errors.country && !!touched.country}
+                      label="*Country/Region"
                       placeholder="Enter Your Country/Region"
                       fullWidth
                       outline="none"
@@ -419,8 +421,8 @@ export default function Login(props) {
                       id="phone"
                       name="phone"
                       value={values.phone}
-                      error={!!errors.phone}
-                      label="Phone"
+                      error={!!errors.phone && !!touched.phone}
+                      label="*Phone"
                       placeholder="Enter Your Phone"
                       fullWidth
                       outline="none"

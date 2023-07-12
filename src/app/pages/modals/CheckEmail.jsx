@@ -12,6 +12,12 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Formik } from "formik";
 import LoadingScreen from "../../components/LoadingScreen";
 import React from "react";
+import axios from "axios";
+
+const api = axios.create({
+  baseURL:
+    "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
+});
 
 const useStyles = makeStyles(() => ({
   noBorder: {
@@ -55,33 +61,29 @@ export default function CheckEmail(props) {
 
 
   const submitForm = async (values) => {
-    try {
-      setIsLoading(true);
-      const response = await fetch("/api/v1/login/email", {
-        method: "POST",
-        headers: {
+    
+    setIsLoading(true);
+    api.post("/api/v1/login/email", {
+        email_add: values.email
+      }, {
+        header: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          email_add: values.email,
-        }),
+      })
+      .then((response) => {
+        // Handle the API response
+        setIsLoading(false);
+        if(response.data == "Email found"){
+          handleEmailChecking(true, values.email);
+        }
+      })
+      .catch((error) => {
+        // Handle the API error
+        setIsLoading(false);
+        if (error.response["data"] == "Email not found"){
+          handleEmailChecking(false, values.email);
+        }
       });
-
-      if (response.ok) {
-        //const data = await response.json();
-
-        // Handle successful login
-        setIsLoading(false);
-        handleEmailChecking(true, values.email);
-      } else {
-        // Handle login error
-        setIsLoading(false);
-        handleEmailChecking(false, values.email);
-      }
-    } catch (error) {
-      setIsLoading(false);
-      console.error("Error occurred during checking:", error);
-    }
   };
 
   const handleEmailChecking = (isExisting, value) => {
