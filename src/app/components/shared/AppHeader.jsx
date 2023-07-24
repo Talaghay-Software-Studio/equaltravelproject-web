@@ -93,8 +93,6 @@ export default function AppHeader(props) {
 
   const { auth, setAuth } = React.useContext(AuthContext);
 
-  console.log("UserDetail: ", user, props.userDetails);
-
   React.useEffect(() => {
     setUser(props.userDetails);
   }, [props.userDetails]);
@@ -162,7 +160,6 @@ export default function AppHeader(props) {
   const setUserAvatar = () => {
     const { userDetails } = user;
     const initials = userDetails && userDetails["first_name"][0] + userDetails["last_name"][0];
-    console.log("HELLOOOOO", initials, user);
     return initials ? (
       <Avatar sx={{ backgroundColor: "#C2C6CC", fontWeight: 600 }}>
         {initials}
