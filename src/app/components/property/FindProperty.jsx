@@ -1,22 +1,24 @@
 import { Box, Divider, Grid, IconButton, TextField, Typography } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
 import SearchIcon from "/assets/icons/svg/search-round.svg";
 import React from "react";
+import styled from "@emotion/styled";
 import { useNavigate } from "react-router-dom";
 
 const propertTypes = ["Rooms", "Flats", "Hostels", "Villas"];
-const useStyles = makeStyles(() => ({
-    noBorder: {
-        border: "none !important",
-    },
-    innerInputStyles: {
-        padding: "8px 14px !important",
-        fontSize: "14px !important" //Change to em
-    }
-}))
+
+const CustomTextField = styled(TextField)`
+  & .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused > fieldset {
+    border: none !important;
+  }
+  ,
+  & .MuiInputBase-root.MuiOutlinedInput-root > input {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+`;
 
 export default function FindProperty(){
-    const compStyles = useStyles();
+    // const compStyles = useStyles();
     const navigate = useNavigate();
 
     const [guestNum, setGuestNum] = React.useState();
@@ -81,59 +83,35 @@ export default function FindProperty(){
               alignItems: "flex-end",
             }}
           >
-            <TextField
+            <CustomTextField
               focused
               id="location-field"
               label="Location"
               placeholder="Which city do you prefer?"
               outline="none"
-              InputProps={{
-                classes: {
-                  notchedOutline: compStyles.noBorder,
-                  input: compStyles.innerInputStyles,
-                },
-              }}
             />
             <Divider orientation="vertical" variant="middle" flexItem />
-            <TextField
+            <CustomTextField
               focused
               type="date"
               id="check-in-field"
               label="Check In"
               placeholder="Add Dates"
-              InputProps={{
-                classes: {
-                  notchedOutline: compStyles.noBorder,
-                  input: compStyles.innerInputStyles,
-                },
-              }}
             />
             <Divider orientation="vertical" variant="middle" flexItem />
-            <TextField
+            <CustomTextField
               focused
               type="date"
               id="check-out-field"
               label="Guests"
               placeholder="Add Dates"
-              InputProps={{
-                classes: {
-                  notchedOutline: compStyles.noBorder,
-                  input: compStyles.innerInputStyles,
-                },
-              }}
             />
             <Divider orientation="vertical" variant="middle" flexItem />
-            <TextField
+            <CustomTextField
               focused
               id="guest-count-field"
               label="Guests"
               placeholder="Add Guests"
-              InputProps={{
-                classes: {
-                  notchedOutline: compStyles.noBorder,
-                  input: compStyles.innerInputStyles,
-                },
-              }}
               value={guestNum}
               onChange={(e) => handleGuestChange(e)}
             />

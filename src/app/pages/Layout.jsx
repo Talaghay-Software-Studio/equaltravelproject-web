@@ -1,28 +1,28 @@
 import { ThemeProvider } from "@mui/material/styles";
 import { useState } from "react";
-import AppHeader from "../components/AppHeader";
-import BackToTop from "../components/BackToTop";
-import Footer from "../components/Footer";
-import Newsletter from "../components/Newsletter";
+import PropTypes from "prop-types";
+import AppHeader from "../components/shared/AppHeader";
+import BackToTop from "../components/shared/BackToTop";
+import Footer from "../components/shared/Footer";
+import Newsletter from "../components/shared/Newsletter";
 import theme from "../styles/theme"
-import AuthModal from "../pages/modals/AuthModal"
+import AuthModal from "../components/auth-modals/AuthModal"
 
 export default function Layout(props) {
     const [showAuth, setShowAuth] = useState(false);
-    const [userAvatar, setUserAvatar] = useState("");
+    const [userDetails, setUserDetails] = useState({});
 
     const showAuthModal = (show) => {
       setShowAuth(show);
     };
 
-    const setAvatar = (isLoggedIn, initials) => {
-      if(isLoggedIn){
-        setUserAvatar(initials);
+    const setUser = (isLoggedIn, user) => {
+      if (isLoggedIn) {
+        setUserDetails(user);
+      } else {
+        setUserDetails("");
       }
-      else{
-        setUserAvatar("");
-      }
-    }
+    };
 
     return (
       <ThemeProvider theme={theme}>
@@ -32,7 +32,8 @@ export default function Layout(props) {
         >
           <AppHeader
             appBarStyle={props.appBarStyle}
-            userAvatar={userAvatar}
+            userDetails={userDetails}
+            hideBecomeHostBtn={props.hideBecomeHostBtn}
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
           />
@@ -40,7 +41,7 @@ export default function Layout(props) {
           <AuthModal
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
-            setAvatar={(bool, initials) => setAvatar(bool, initials)}
+            setUser={(bool, initials) => setUser(bool, initials)}
           />
 
           <div style={{ marginTop: props.topMargin ? "85px" : "0px" }}>
@@ -56,3 +57,9 @@ export default function Layout(props) {
       </ThemeProvider>
     );
 }
+
+Layout.propTypes = {
+  topMargin: PropTypes.bool,
+  appBarStyle: PropTypes.string,
+  hideBecomeHostBtn: PropTypes.bool,
+};

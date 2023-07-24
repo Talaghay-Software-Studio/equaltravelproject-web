@@ -4,15 +4,15 @@ import HompageBanner from "/assets/img/homepage-banner.jpg";
 import BackgroundImage1 from "/assets/img/hosting-bg.png";
 import BackgroundImage2 from "/assets/img/browse-properties.png";
 import BackgroundImage3 from "/assets/img/12.png";
-import FindProperty from "../components/FindProperty";
-import PropertyListings from "../components/PropertyListings";
+import FindProperty from "../components/property/FindProperty";
+import PropertyListings from "../components/property/PropertyListings";
 import Layout from "./Layout";
 
 const propertySections = ["Latest on the Property Listing", "Nearby Listed Properties", "Top Rated Properties"];
 
 export default function HomePage(){
     return (
-      <Layout topMargin={false} appBarStyle="dynamic">
+      <Layout topMargin={false} appBarStyle="dynamic" showBecomeHostBtn={false}>
         <Grid
           sx={{
             display: "flex",

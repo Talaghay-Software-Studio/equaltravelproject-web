@@ -1,0 +1,32 @@
+
+.app-bar-transparent {
+    background-color: "transparent !important";
+    box-shadow: "none !important";
+}
+
+
+.app-bar-primary {
+    background-color: "#3B79C9 !important";
+    box-shadow: "unset !important";
+}
+
+.blue-host-button {
+    background: "#3B79C9 !important";
+    color: "#FFFFFF !important";
+    
+}
+
+.blue-host-button:hover {
+    background: "#3B79C9 !important";
+    color: "#FFFFFF !important";
+}
+
+.white-button {
+    background: "#FFFFFF !important";
+    color: "3B79C9 !important";
+}
+
+.white-button:hover {
+    background: "FFFFFF !important";
+    color: "#3B79C9 !important";
+}

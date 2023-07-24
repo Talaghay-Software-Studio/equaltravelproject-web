@@ -10,46 +10,32 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Formik } from "formik";
-import React from "react";
-import LoadingScreen from "../../components/LoadingScreen";
-import axios from "axios";
+import React, { useContext } from "react";
+import LoadingScreen from "../shared/LoadingScreen";
+import axios from "../../api/axios";
+import AuthContext from "../../context/AuthProvider"
+import { useNavigate, useLocation } from "react-router-dom";
 
-const api = axios.create({
-  baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
-});
+const CustomTextField = styled(TextField)`
+  & .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused > fieldset {
+    border: none !important;
+  }
+  ,
+  & .MuiInputBase-root.MuiOutlinedInput-root > input {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+`;
 
-const useStyles = makeStyles(() => ({
-  noBorder: {
-    border: "none !important",
-    "&:hover": {
-      border: "none !important",
-    },
-    "&:after": {
-      border: "none !important",
-    },
-    "&:before": {
-      border: "none !important",
-    },
-  },
-  innerInputStyles: {
-    padding: "8px 14px !important",
-    fontSize: "1rem !important",
-  },
-
-  passwordInputStyles: {
-    padding: "2px 2px 8px 14px !important",
-    fontSize: "1rem !important",
-  },
-  buttonBackground: {
-    background: "#3B79C9 !important",
-    "&:hover": {
-      background: "#3B79C9 !important",
-    },
-  },
-}));
+const BlueAuthButton = styled(Button)`
+  background: #3B79C9 !important;
+  &:hover {
+    background: #3B79C9 !important;
+  }
+`;
 
 const validate = (values) => {
   let errors = {};
@@ -60,9 +46,15 @@ const validate = (values) => {
 };
 
 export default function Login(props) {
-  const compStyles = useStyles();
+  const { email } = props;
+  const { setAuth } = useContext(AuthContext);
+
   const [showPassword, setShowPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -71,43 +63,58 @@ export default function Login(props) {
   };
 
   const submitForm = async (values) => {
+    const { password } = values;
     setIsLoading(true);
-    api.post("/api/v1/login", {
-        email_add: props.email,
-        password: values.password
-      }, {
-        headers: {
-        "Content-Type": "application/json",
+    axios.post(
+        "/api/v1/login",
+        {
+          email_add: props.email,
+          password: values.password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          },
         }
-      }).then((response) => {
+      )
+      .then((response) => {
         // Handle the API response
         setIsLoading(false);
         if (response.data["message"] == "Login successful") {
-          setIsLoading(false);
-          const userInitials = handleUserInitials(response.data["userDetails"][0]);
-          handleUserLogin("success", userInitials);
+          const token = response?.data?.token;
+          setAuth({ email, password, token });
+          
+
+          return axios.post("/api/v1/token", {
+           token: token
+          });
         }
+      }).then((response) => {
+        if(response?.data?.message == "Token is valid"){
+          const user = response?.data?.user;
+          setIsLoading(false);
+          handleUserLogin("success", user);
+
+          navigate(from, { replace: true });
+        }
+        
       })
       .catch((error) => {
-
         // Handle the API error
         setIsLoading(false);
         if (error.response["data"] == "Invalid password") {
           setIsLoading(false);
           handleUserLogin("error", "");
         }
+        else if(!error?.response){
+          console.log("Server Error");
+        }
       });
   };
 
-
-  const handleUserInitials = (userDetails) => {
-    const initials = userDetails["first_name"][0] + userDetails["last_name"][0];
-    return initials;
-  }
-
-  const handleUserLogin = (status, initials) => {
-    props.handleUserLogin(status, initials);
-  }
+  const handleUserLogin = (status, user) => {
+    props.handleUserLogin(status, user);
+  };
   
   return (
     <>
@@ -148,7 +155,7 @@ export default function Login(props) {
                       }),
                     }}
                   >
-                    <TextField
+                    <CustomTextField
                       focused
                       id="password"
                       name="password"
@@ -160,10 +167,6 @@ export default function Login(props) {
                       fullWidth
                       outline="none"
                       InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
@@ -201,7 +204,7 @@ export default function Login(props) {
                     flexDirection: "column",
                   }}
                 >
-                  <Button
+                  <BlueAuthButton
                     disabled={!(dirty && isValid)}
                     type="submit"
                     sx={{
@@ -211,10 +214,9 @@ export default function Login(props) {
                       height: "55px",
                     }}
                     className="title"
-                    classes={{ root: compStyles.buttonBackground }}
                   >
                     LOGIN
-                  </Button>
+                  </BlueAuthButton>
 
                   <Grid
                     sx={{ display: "flex", justifyContent: "center", m: 2 }}

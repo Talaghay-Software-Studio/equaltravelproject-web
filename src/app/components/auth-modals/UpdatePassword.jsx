@@ -11,40 +11,40 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+// import makeStyles from "@mui/styles/makeStyles";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Formik } from "formik";
 import React from "react";
 
-const useStyles = makeStyles(() => ({
-  noBorder: {
-    border: "none !important",
-    "&:hover": {
-      border: "none !important",
-    },
-    "&:after": {
-      border: "none !important",
-    },
-    "&:before": {
-      border: "none !important",
-    },
-  },
-  innerInputStyles: {
-    padding: "8px 14px !important",
-    fontSize: "1rem !important",
-  },
+// const useStyles = makeStyles(() => ({
+//   noBorder: {
+//     border: "none !important",
+//     "&:hover": {
+//       border: "none !important",
+//     },
+//     "&:after": {
+//       border: "none !important",
+//     },
+//     "&:before": {
+//       border: "none !important",
+//     },
+//   },
+//   innerInputStyles: {
+//     padding: "8px 14px !important",
+//     fontSize: "1rem !important",
+//   },
 
-  passwordInputStyles: {
-    padding: "2px 2px 8px 14px !important",
-    fontSize: "1rem !important",
-  },
-  buttonBackground: {
-    background: "#3B79C9 !important",
-    "&:hover": {
-      background: "#3B79C9 !important",
-    },
-  },
-}));
+//   passwordInputStyles: {
+//     padding: "2px 2px 8px 14px !important",
+//     fontSize: "1rem !important",
+//   },
+//   buttonBackground: {
+//     background: "#3B79C9 !important",
+//     "&:hover": {
+//       background: "#3B79C9 !important",
+//     },
+//   },
+// }));
 
 const validate = (values) => {
   let errors = {};
@@ -55,7 +55,7 @@ const validate = (values) => {
 };
 
 export default function UpdatePassword(props) {
-  const compStyles = useStyles();
+  // const compStyles = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
   //   const [showConfirmPassword, setshowConfirmPassword] = React.useState(false);
 
@@ -152,10 +152,10 @@ export default function UpdatePassword(props) {
                     fullWidth
                     outline="none"
                     InputProps={{
-                      classes: {
-                        notchedOutline: compStyles.noBorder,
-                        input: compStyles.innerInputStyles,
-                      },
+                      // classes: {
+                      //   notchedOutline: compStyles.noBorder,
+                      //   input: compStyles.innerInputStyles,
+                      // },
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
@@ -191,10 +191,10 @@ export default function UpdatePassword(props) {
                     fullWidth
                     outline="none"
                     InputProps={{
-                      classes: {
-                        notchedOutline: compStyles.noBorder,
-                        input: compStyles.innerInputStyles,
-                      },
+                      // classes: {
+                      //   notchedOutline: compStyles.noBorder,
+                      //   input: compStyles.innerInputStyles,
+                      // },
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
@@ -239,7 +239,7 @@ export default function UpdatePassword(props) {
                     height: "55px",
                   }}
                   className="title"
-                  classes={{ root: compStyles.buttonBackground }}
+                  // classes={{ root: compStyles.buttonBackground }}
                 >
                   UPDATE
                 </Button>
