@@ -15,20 +15,12 @@ import AddPropertyPhotos from "../components/add-property/AddPropertyPhotos";
 import AddPropertyTitle from "../components/add-property/AddPropertyTitle";
 import AddPropertyPrice from "../components/add-property/AddPropertyPrice";
 import ReviewProperty from "../components/add-property/ReviewProperty";
-import Snackbar from "@mui/material/Snackbar";
-import MuiAlert from "@mui/material/Alert";
-
-const Alert = React.forwardRef(function Alert(props, ref) {
-  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
+import SubmittedModal from "../components/add-property/SubmittedModal";
 
 export default function AddPropertyPage(){
   const navigate = useNavigate();
-  const [authSnackbar, setauthSnackbar] = React.useState({
-    open: false,
-    severity: "",
-    message: "",
-  });
+
+  const [showSubmit, setShowSubmit] = React.useState(false);
   const [contentState, setContentState] = React.useState("propertyCategory");
     // const [propertyState, setPropertyState] = React.useState({
     //     type: "",
@@ -141,32 +133,14 @@ export default function AddPropertyPage(){
     };
 
     const handleSubmitProperty = () => {
-      handleOpenAuthSnackbar("success", "Successfully submitted! We'll be reviewing your submission and will let you know how it goes right away.");
+      //handleOpenAuthSnackbar("success", "Successfully submitted! We'll be reviewing your submission and will let you know how it goes right away.");
+      setShowSubmit(true)
 
-      navigate({
-        pathname: "/host-page",
-      });
+      // navigate({
+      //   pathname: "/host-page",
+      // });
 
     };
-
-    const handleOpenAuthSnackbar = (severity, message) => {
-      setauthSnackbar({
-        open: true,
-        severity: severity,
-        message: message,
-      });
-    };
-
-    const handleCloseSnackbar = (event, reason) => {
-      if (reason === "clickaway") {
-        return;
-      }
-      setauthSnackbar({
-        ...authSnackbar,
-        open: false,
-      });
-    };
-
 
     return (
       <Layout
@@ -248,28 +222,19 @@ export default function AddPropertyPage(){
                   color: "#FFFFFF !important",
                 },
               }}
-              onClick={() => handleNext(
-                contentState == "reviewProperty" ? "Submit" : "Next"
-              )}
+              onClick={() =>
+                handleNext(contentState == "reviewProperty" ? "Submit" : "Next")
+              }
             >
               {`${contentState == "reviewProperty" ? "Submit" : "Next"}`}
             </Button>
           </Grid>
         </Grid>
-        <Snackbar
-          open={authSnackbar.open}
-          anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          autoHideDuration={3000}
-          onClose={handleCloseSnackbar}
-        >
-          <Alert
-            onClose={handleCloseSnackbar}
-            severity={authSnackbar.severity}
-            sx={{ width: "100%" }}
-          >
-            {authSnackbar.message}
-          </Alert>
-        </Snackbar>
+
+        <SubmittedModal
+          showSubmit={showSubmit}
+          setShowSubmit={(bool) => setShowSubmit(bool)}
+        />
       </Layout>
     );
 }
