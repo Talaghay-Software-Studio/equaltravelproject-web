@@ -5,55 +5,85 @@ import {
   DialogContent,
   DialogContentText,
   Divider,
+  FormControl,
   Grid,
   IconButton,
   InputAdornment,
+  MenuItem,
+  Select,
   TextField,
   Typography,
 } from "@mui/material";
 import React from "react";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Formik } from "formik";
 import CheckBoxRoundedIcon from "@mui/icons-material/CheckBoxRounded";
 import DisabledByDefaultRoundedIcon from "@mui/icons-material/DisabledByDefaultRounded";
-import LoadingScreen from "../../components/LoadingScreen";
+import LoadingScreen from "../shared/LoadingScreen";
 import axios from "axios";
+import { DatePicker } from "@mui/x-date-pickers";
+import { LocalizationProvider } from "@mui/x-date-pickers";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import moment from "moment";
 
 const api = axios.create({
   baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
 });
 
-const useStyles = makeStyles(() => ({
-  noBorder: {
-    border: "none !important",
-    "&:hover": {
-      border: "none !important",
-    },
-    "&:after": {
-      border: "none !important",
-    },
-    "&:before": {
-      border: "none !important",
-    },
-  },
-  innerInputStyles: {
-    padding: "8px 14px !important",
-    fontSize: "1rem !important",
-  },
+const CustomTextField = styled(TextField)`
+  & .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused > fieldset {
+    border: none !important;
+  }
+  ,
+  & .MuiInputBase-root.MuiOutlinedInput-root > input {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+`;
 
-  passwordInputStyles: {
-    padding: "2px 2px 8px 14px !important",
-    fontSize: "1rem !important",
-  },
-  buttonBackground: {
-    background: "#3B79C9 !important",
-    "&:hover": {
-      background: "#3B79C9 !important",
+const BlueAuthButton = styled(Button)`
+  background: #3B79C9 !important;
+  &:hover {
+    background: #3B79C9 !important;
+  }
+`;
+const StyledDatepicker = styled(DatePicker)`
+  & .MuiInputBase-root.MuiOutlinedInput-root > fieldset {
+    border: none !important;
+  }
+  ,
+  & .MuiInputBase-root.MuiOutlinedInput-root > input {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+`;
+
+const StyledSelect = styled(Select)`
+  & .MuiInputBase-root.MuiOutlinedInput-root > fieldset {
+    border: none !important;
+  }
+`;
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
     },
   },
-}));
-
+};
+const accessibiltyNeeds = [
+  "Mobility or Physical Impairment",
+  "Visual Impairment",
+  "Hearing Impairment",
+  "Cognitive or Learning impairment",
+  "Speech Impairment",
+  "Mental Health Impairments",
+  "Chronic Health Conditions",
+];
 const validate = (values) => {
   let errors = {};
 
@@ -68,17 +98,10 @@ const validate = (values) => {
   if (!values.lastName) {
     errors.lastName = "Last Name is required";
   }
+
   //Birthdate
   if (!values.birthdate) {
     errors.birthdate = "Birthdate is required";
-  }
-  //Country
-  if (!values.country) {
-    errors.country = "Country is required";
-  }
-  //Phone
-  if (!values.phone) {
-    errors.phone = "Phone is required";
   }
 
   // Email
@@ -101,7 +124,9 @@ const validate = (values) => {
   return errors;
 };
 
-export default function Login(props) {
+
+
+export default function Signup(props) {
   const initialValues = {
     email: props.email,
     password: "",
@@ -111,9 +136,9 @@ export default function Login(props) {
     birthdate: "",
     country: "",
     phone: "",
+    accessibilityNeeds: []
   };
-
-  const compStyles = useStyles();
+  // const compStyles = useStyles();
   const [showPassword, setShowPassword] = React.useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -139,11 +164,12 @@ export default function Login(props) {
         {
           first_name: values.firstName,
           last_name: values.lastName,
-          birth_date: values.birthdate,
+          birth_date: moment((values.birthdate).toDate()).format("yyyy-MM-DD"),
           country: values.country,
           phone_number: values.country,
           email_add: values.email,
           password: values.password,
+          accessibility_needs: (values.accessibilityNeeds).toString(),
         },
         {
           headers: {
@@ -159,7 +185,6 @@ export default function Login(props) {
         }
       })
       .catch((error) => {
-
         // Handle the API error
         setIsLoading(false);
         if (error.response["data"] == "Error creating user") {
@@ -187,6 +212,7 @@ export default function Login(props) {
             errors,
             touched,
             handleBlur,
+            setFieldValue,
             isValid,
             dirty,
           } = formik;
@@ -236,7 +262,7 @@ export default function Login(props) {
                     }}
                   >
                     {/* First Name */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="firstName"
                       name="firstName"
@@ -246,12 +272,14 @@ export default function Login(props) {
                       placeholder="Enter Your First Name"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
+                      InputProps={
+                        {
+                          // classes: {
+                          //   notchedOutline: compStyles.noBorder,
+                          //   input: compStyles.innerInputStyles,
+                          // },
+                        }
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -264,7 +292,7 @@ export default function Login(props) {
                     />
 
                     {/* Last Name */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="lastName"
                       name="lastName"
@@ -274,12 +302,14 @@ export default function Login(props) {
                       placeholder="Enter Your Last Name"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
+                      InputProps={
+                        {
+                          // classes: {
+                          //   notchedOutline: compStyles.noBorder,
+                          //   input: compStyles.innerInputStyles,
+                          // },
+                        }
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -327,25 +357,28 @@ export default function Login(props) {
                       }),
                     }}
                   >
-                    <TextField
-                      focused
-                      id="birthdate"
-                      name="birthdate"
-                      value={values.birthdate}
-                      error={!!errors.birthdate && !!touched.birthdate}
-                      label="*Birthdate"
-                      placeholder="YYYY-MM-DD"
-                      fullWidth
-                      outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                      <StyledDatepicker
+                        label="*Birthdate"
+                        id="name"
+                        name="birthdate"
+                        format="YYYY-MM-DD"
+                        value={values.birthdate}
+                        slotProps={{
+                          textField: {
+                            focused: true,
+                            fullWidth: true,
+                            id: "name",
+                            name: "birthdate",
+                          },
+                        }}
+                        onChange={(value) =>
+                          setFieldValue("birthdate", value, true)
+                        }
+                        // onChange={handleChange}
+                        // onBlur={handleBlur}
+                      />
+                    </LocalizationProvider>
                   </Box>
                   {errors.birthdate && touched.birthdate && (
                     <Typography
@@ -388,22 +421,24 @@ export default function Login(props) {
                     }}
                   >
                     {/* Country/Region */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="country"
                       name="country"
                       value={values.country}
                       error={!!errors.country && !!touched.country}
-                      label="*Country/Region"
+                      label="Country/Region"
                       placeholder="Enter Your Country/Region"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
+                      InputProps={
+                        {
+                          // classes: {
+                          //   notchedOutline: compStyles.noBorder,
+                          //   input: compStyles.innerInputStyles,
+                          // },
+                        }
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -416,22 +451,24 @@ export default function Login(props) {
                     />
 
                     {/* Phone Number */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="phone"
                       name="phone"
                       value={values.phone}
                       error={!!errors.phone && !!touched.phone}
-                      label="*Phone"
+                      label="Phone"
                       placeholder="Enter Your Phone"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
+                      InputProps={
+                        {
+                          // classes: {
+                          //   notchedOutline: compStyles.noBorder,
+                          //   input: compStyles.innerInputStyles,
+                          // },
+                        }
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -480,7 +517,7 @@ export default function Login(props) {
                       }),
                     }}
                   >
-                    <TextField
+                    <CustomTextField
                       focused
                       id="email"
                       name="email"
@@ -490,12 +527,14 @@ export default function Login(props) {
                       placeholder="Enter Your Email"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
+                      InputProps={
+                        {
+                          // classes: {
+                          //   notchedOutline: compStyles.noBorder,
+                          //   input: compStyles.innerInputStyles,
+                          // },
+                        }
+                      }
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -540,7 +579,7 @@ export default function Login(props) {
                     }}
                   >
                     {/* Password */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="password"
                       name="password"
@@ -552,10 +591,10 @@ export default function Login(props) {
                       fullWidth
                       outline="none"
                       InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
+                        // classes: {
+                        //   notchedOutline: compStyles.noBorder,
+                        //   input: compStyles.innerInputStyles,
+                        // },
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
@@ -585,7 +624,7 @@ export default function Login(props) {
                     />
 
                     {/* Confirm Password */}
-                    <TextField
+                    <CustomTextField
                       focused
                       id="confirmPassword"
                       name="confirmPassword"
@@ -599,10 +638,10 @@ export default function Login(props) {
                       fullWidth
                       outline="none"
                       InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
+                        // classes: {
+                        //   notchedOutline: compStyles.noBorder,
+                        //   input: compStyles.innerInputStyles,
+                        // },
                         endAdornment: (
                           <InputAdornment position="end">
                             <IconButton
@@ -611,7 +650,7 @@ export default function Login(props) {
                               onMouseDown={handleMouseDownConfirmPassword}
                               sx={{ marginBottom: "20px" }}
                             >
-                              {showPassword ? (
+                              {showConfirmPassword ? (
                                 <VisibilityOff />
                               ) : (
                                 <Visibility />
@@ -693,6 +732,63 @@ export default function Login(props) {
                       </Grid>
                     </Grid>
                   )}
+
+                  {/* ACCESSIBILITY NEEDS */}
+                  <Box
+                    sx={{
+                      background: "#FFFFFF",
+                      borderRadius: "10px",
+                      padding: "15px 0px 5px",
+                      height: "fit-content",
+                      display: "flex",
+                      flexDirection: "column",
+                      justifyContent: "flex-start",
+                      alignItems: "flex-end",
+                    }}
+                  >
+                    <FormControl sx={{ width: "100%", mt: 1 }}>
+                      <StyledSelect
+                        fullWidth
+                        multiple
+                        displayEmpty
+                        placeholder="Do you have accessibility needs? (Optional)"
+                        id="accessibilityNeeds"
+                        name="accessibilityNeeds"
+                        value={values.accessibilityNeeds}
+                        onChange={handleChange}
+                        // input={<OutlinedInput />}
+                        renderValue={(selected) => {
+                          if (selected.length === 0) {
+                            return (
+                              <em>
+                                Do you have accessibility needs? (Optional)
+                              </em>
+                            );
+                          }
+
+                          return selected.join(", ");
+                        }}
+                        MenuProps={MenuProps}
+                        inputProps={{
+                          "aria-label": "Accessibility Needs Field",
+                        }}
+                        IconComponent={ExpandMoreIcon}
+                        sx={{
+                          borderRadius: "10px",
+                          border: "1px solid #9A9A9A",
+                        }}
+                      >
+                        <MenuItem disabled value="">
+                          <em>Select applicable:</em>
+                        </MenuItem>
+                        {accessibiltyNeeds.map((name) => (
+                          <MenuItem key={name} value={name}>
+                            {name}
+                          </MenuItem>
+                        ))}
+                      </StyledSelect>
+                    </FormControl>
+                  </Box>
                 </DialogContent>
                 <DialogActions
                   sx={{
@@ -701,7 +797,7 @@ export default function Login(props) {
                     flexDirection: "column",
                   }}
                 >
-                  <Button
+                  <BlueAuthButton
                     disabled={!(dirty && isValid)}
                     type="submit"
                     sx={{
@@ -711,10 +807,9 @@ export default function Login(props) {
                       height: "55px",
                     }}
                     className="title"
-                    classes={{ root: compStyles.buttonBackground }}
                   >
                     CREATE AN ACCOUNT
-                  </Button>
+                  </BlueAuthButton>
                   <DialogContentText
                     sx={{
                       padding: "40px 0px 15px",

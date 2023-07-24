@@ -2,7 +2,7 @@ import { Avatar, Card, CardActions, Grid, IconButton, Typography } from "@mui/ma
 import FavoriteTwoToneIcon from '@mui/icons-material/FavoriteTwoTone';
 import StarOutlineRoundedIcon from '@mui/icons-material/StarOutlineRounded';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 
 const bottomIcons = [
   {
@@ -27,13 +27,12 @@ const bottomIcons = [
   },
 ];
 
-const useStyles = makeStyles(() => ({
-    paper: {
-        borderRadius: "16px 16px 0px 0px !important"
-    }
-}));
+const CustomCard = styled(Card)`
+  &.roundedCard {
+    border-radius: 16px 16px 0px 0px;
+  }
+`;
 export default function PropertyCard(props){
-    const compStyles = useStyles();
     return (
       <Grid
         sx={{
@@ -48,7 +47,7 @@ export default function PropertyCard(props){
           flexDirection: "column",
         }}
       >
-        <Card
+        <CustomCard
           sx={{
             height: "360px",
             minWidth: "315px",
@@ -58,7 +57,7 @@ export default function PropertyCard(props){
             flexDirection: "column",
             justifyContent: "space-between",
           }}
-          classes={{ paper: props.paperShadow && compStyles.paper }}
+          className={props.paperShadow && "roundedCard"}
         >
           <CardActions disableSpacing sx={{ justifyContent: "flex-end" }}>
             {!props.hideFaveIcon && (
@@ -68,11 +67,13 @@ export default function PropertyCard(props){
             )}
           </CardActions>
           <Grid sx={{ display: "flex", mt: "auto", padding: "20px" }}>
-            <Avatar
-              sx={{ width: 60, height: 60 }}
-              src={`${props.avatarProp}`}
-              aria-label="property"
-            />
+            {props.avatarProp && (
+              <Avatar
+                sx={{ width: 60, height: 60 }}
+                src={`${props.avatarProp}`}
+                aria-label="property"
+              />
+            )}
             {props.paperShadow && (
               <Grid
                 sx={{
@@ -88,7 +89,7 @@ export default function PropertyCard(props){
               </Grid>
             )}
           </Grid>
-        </Card>
+        </CustomCard>
 
         <Grid
           sx={{
@@ -130,12 +131,10 @@ export default function PropertyCard(props){
           {/* Prperty name and other text info */}
           <Grid sx={{ pt: "5px" }}>
             <Typography className="title" sx={{ color: "#3B79C9" }}>
-              {" "}
-              {`Lorem Ipsum Dolor`}{" "}
+              {`${props.title ? props.title : "Lorem Ipsum"}`}
             </Typography>
             <Typography sx={{ color: "#9A9A9A" }}>
-              {" "}
-              {`Lorem Ipsum Dolor`}{" "}
+              {`${props.subtitle ? props.subtitle : "Lorem Ipsum"}`}
             </Typography>
           </Grid>
 

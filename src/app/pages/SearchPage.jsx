@@ -1,6 +1,6 @@
 import { Box, Grid, IconButton, Typography } from "@mui/material";
 import Layout from "./Layout";
-import PropertyCard from "../components/PropertyCard";
+import PropertyCard from "../components/property/PropertyCard";
 import MapImage from "/assets/icons/svg/map.svg";
 import CloseIcon from "@mui/icons-material/Close";
 import TuneRoundedIcon from "@mui/icons-material/TuneRounded";

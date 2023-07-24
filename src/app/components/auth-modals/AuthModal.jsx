@@ -3,7 +3,7 @@ import {
   DialogTitle,
   IconButton,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 import CloseIcon from "@mui/icons-material/Close";
 import BackIcon from "/assets/icons/svg/back.svg";
 import React from "react";
@@ -15,66 +15,37 @@ import Signup from "./Signup";
 import ForgotPassword from "./ForgotPassword";
 import UpdatePassword from "./UpdatePassword";
 
-const useStyles = makeStyles(() => ({
-  noBorder: {
-    border: "none !important",
-    "&:hover": {
-      border: "none !important",
-    },
-    "&:after": {
-      border: "none !important",
-    },
-    "&:before": {
-      border: "none !important",
-    },
-  },
-  innerInputStyles: {
-    padding: "8px 14px !important",
-    fontSize: "1rem !important",
-  },
-
-  passwordInputStyles: {
-    padding: "2px 2px 8px 14px !important",
-    fontSize: "1rem !important",
-  },
-  buttonBackground: {
-    background: "#3B79C9 !important",
-    "&:hover": {
-      background: "#3B79C9 !important",
-    },
-  },
-  dialogBorderRadius: {
-    borderRadius: "10px !important"
-  }
-}));
+const StyledDialog = styled(Dialog)`
+  border-radius: 10px !important;
+`;
 
 const Alert = React.forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
 });
 
-export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
+export default function AuthModal({ showAuth, showAuthModal, setUser }) {
   let dialogContent = null;
-  const compStyles = useStyles();
+  // const compStyles = useStyles();
   const [dialogType, setDialogType] = React.useState("default");
   const [dialogTitle, setDialogTitle] = React.useState("Login or Sign Up");
 
   const [formState, setFormState] = React.useState({
     email: "",
   });
-  
+
   const [authSnackbar, setauthSnackbar] = React.useState({
     open: false,
     severity: "",
-    message: ""
+    message: "",
   });
 
   const handleOpenAuthSnackbar = (severity, message) => {
     setauthSnackbar({
       open: true,
       severity: severity,
-      message: message
-    })
-  }
+      message: message,
+    });
+  };
 
   const handleCloseSnackbar = (event, reason) => {
     if (reason === "clickaway") {
@@ -82,7 +53,7 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
     }
     setauthSnackbar({
       ...authSnackbar,
-      open: false
+      open: false,
     });
   };
 
@@ -92,7 +63,6 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
   };
 
   const handleBack = () => {
-
     let type = "";
 
     switch (dialogTitle) {
@@ -113,7 +83,7 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
     }
 
     changeDialogType(type);
-  }
+  };
 
   const changeDialogType = (type) => {
     setDialogType(type);
@@ -138,39 +108,38 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
     }
 
     setDialogTitle(title);
-  }
+  };
 
   const handleFormChange = (name, value) => {
     setFormState({
       ...formState,
       [name]: value,
     });
-  }
+  };
 
-  const handleUserLogin = (status, userInitials) => {
+  const handleUserLogin = (status, user) => {
     const isLoggedIn = status == "success";
-    if(status == "success"){
+    if (isLoggedIn) {
+      
+      setUser(isLoggedIn, user);
       handleOpenAuthSnackbar("success", "Login successful!");
       handleCloseModal();
-    } 
-    else if (status == "forgotPassword") {
+    } else if (status == "forgotPassword") {
       changeDialogType("forgotPassword");
     } else {
       handleOpenAuthSnackbar("error", "Invalid password.");
     }
-    setAvatar(isLoggedIn, userInitials);
-  }
-
+  };
+  
   const handleForgotPassword = (status, message) => {
-    if(status == "success"){
+    if (status == "success") {
       handleOpenAuthSnackbar("success", message);
-    }
-    else if (status == "error"){
+    } else if (status == "error") {
       handleOpenAuthSnackbar("error", message);
     }
 
     handleCloseModal();
-  }
+  };
 
   const handleUserSignup = (status, email) => {
     if (status == "success") {
@@ -180,39 +149,45 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
     } else {
       handleOpenAuthSnackbar("error", "Something went wrong");
     }
-  }
+  };
 
   //Login or Input password screen
-  if(dialogType === "login"){
+  if (dialogType === "login") {
     dialogContent = (
       <Login
         email={formState.email}
-        handleUserLogin={(status, userInitials) =>
-          handleUserLogin(status, userInitials)
+        handleUserLogin={(status, user) =>
+          handleUserLogin(status, user)
         }
       />
     );
   }
 
   // Sign up screen
-  else if(dialogType === "signup") {
+  else if (dialogType === "signup") {
     dialogContent = (
-     <Signup email={formState.email} handleUserSignup={(status, email) => handleUserSignup(status, email)}/>
+      <Signup
+        email={formState.email}
+        handleUserSignup={(status, email) => handleUserSignup(status, email)}
+      />
     );
-  } 
+  }
 
   // Forgot Password Screen
   else if (dialogType === "forgotPassword") {
     dialogContent = (
-      <ForgotPassword email={formState.email} handleForgotPassword={(status, messsage) => handleForgotPassword(status, messsage)}/>
+      <ForgotPassword
+        email={formState.email}
+        handleForgotPassword={(status, messsage) =>
+          handleForgotPassword(status, messsage)
+        }
+      />
     );
   }
 
   // Update Password Screen
   else if (dialogType === "updatePassword") {
-    dialogContent = (
-      <UpdatePassword />
-    );
+    dialogContent = <UpdatePassword />;
   }
 
   // Default Dialog Screen
@@ -222,10 +197,9 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
         handleEmailChecking={(isExisting, email) => {
           handleFormChange("email", email);
 
-          if (isExisting){
+          if (isExisting) {
             changeDialogType("login");
-          }
-          else{
+          } else {
             changeDialogType("signup");
           }
         }}
@@ -235,7 +209,7 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
 
   return (
     <div>
-      <Dialog
+      <StyledDialog
         open={showAuth}
         onClose={handleCloseModal}
         maxWidth="sm"
@@ -243,7 +217,6 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
         fullWidth
         aria-labelledby="auth-dialog-title"
         aria-describedby="auth-dialog-description"
-        classes={{ paper: compStyles.dialogBorderRadius }}
       >
         <div
           style={{
@@ -295,11 +268,11 @@ export default function AuthModal({ showAuth, showAuthModal, setAvatar }) {
         </div>
 
         {dialogContent}
-      </Dialog>
+      </StyledDialog>
 
       <Snackbar
         open={authSnackbar.open}
-        anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
         autoHideDuration={3000}
         onClose={handleCloseSnackbar}
       >

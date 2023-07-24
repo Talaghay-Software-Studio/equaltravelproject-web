@@ -8,40 +8,31 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 import { Formik } from "formik";
-import LoadingScreen from "../../components/LoadingScreen";
+import LoadingScreen from "../shared/LoadingScreen";
 import React from "react";
-import axios from "axios";
+// import useAxiosPrivate from "../../hooks/useAxiosPrivate";
 
-const api = axios.create({
-  baseURL: "http://ec2-3-135-237-241.us-east-2.compute.amazonaws.com:8000",
-});
+import axios from "../../api/axios"
 
-const useStyles = makeStyles(() => ({
-  noBorder: {
-    border: "none !important",
-    "&:hover": {
-      border: "none !important",
-    },
-    "&:after": {
-      border: "none !important",
-    },
-    "&:before": {
-      border: "none !important",
-    },
-  },
-  innerInputStyles: {
-    padding: "8px 14px !important",
-    fontSize: "1rem !important",
-  },
-  buttonBackground: {
-    background: "#3B79C9 !important",
-    "&:hover": {
-      background: "#3B79C9 !important",
-    },
-  },
-}));
+const CustomTextField = styled(TextField)`
+  & .MuiInputBase-root.MuiOutlinedInput-root.Mui-focused > fieldset {
+    border: none !important;
+  }
+  ,
+  & .MuiInputBase-root.MuiOutlinedInput-root > input {
+    padding: 8px 14px !important;
+    font-size: 14px !important;
+  }
+`;
+
+const BlueAuthButton = styled(Button)`
+  background: #3B79C9 !important;
+  &:hover {
+    background: "#3B79C9 !important;
+  }
+`;
 
 const validate = (values) => {
   let errors = {};
@@ -54,20 +45,21 @@ const validate = (values) => {
   return errors;
 };
 
-export default function ForgotPassword(props) {
-  const compStyles = useStyles();
+export default function CheckEmail(props) {
+  // const compStyles = useStyles();
   const [isLoading, setIsLoading] = React.useState(false);
+  // const axiosPrivate = useAxiosPrivate();
 
   const submitForm = async (values) => {
     setIsLoading(true);
-    api
+    axios
       .post(
-        "/api/v1/forgotpassword",
+        "/api/v1/login/email",
         {
           email_add: values.email,
         },
         {
-          headers: {
+          header: {
             "Content-Type": "application/json",
           },
         }
@@ -75,30 +67,28 @@ export default function ForgotPassword(props) {
       .then((response) => {
         // Handle the API response
         setIsLoading(false);
-        if (response.status == 200) {
-          handleForgotPassword("success",
-            "Reset password link sent to email. Check Spam if not seen on inbox."
-          );
+        if (response.data == "Email found") {
+          handleEmailChecking(true, values.email);
         }
       })
       .catch((error) => {
-
         // Handle the API error
         setIsLoading(false);
-        if (error.response["data"]["error"] == "User not found") {
-          handleForgotPassword("error","User not found.");
+        if (error.response["data"] == "Email not found") {
+          handleEmailChecking(false, values.email);
         }
       });
   };
 
-  const handleForgotPassword = (status, message) => {
-    props.handleForgotPassword(status, message);
+  const handleEmailChecking = (isExisting, value) => {
+    props.handleEmailChecking(isExisting, value);
   };
+
 
   return (
     <>
       <Formik
-        initialValues={{ email: props.email }}
+        initialValues={{ email: "" }}
         validate={validate}
         onSubmit={submitForm}
       >
@@ -111,17 +101,11 @@ export default function ForgotPassword(props) {
             touched,
             handleBlur,
             isValid,
+            dirty,
           } = formik;
           return (
             <form onSubmit={handleSubmit}>
               <Grid sx={{ display: "flex", flexDirection: "column" }}>
-                <Typography sx={{ px: "24px" }}>
-                  <span style={{ color: "#000000" }}>
-                    {
-                      "Please provide us with the email address linked to your account, and we will send you a link via email to reset your password."
-                    }
-                  </span>
-                </Typography>
                 <DialogContent sx={{ paddingBottom: "10px" }}>
                   <Box
                     sx={{
@@ -132,6 +116,7 @@ export default function ForgotPassword(props) {
                       display: "flex",
                       justifyContent: "flex-start",
                       alignItems: "flex-end",
+                      border: "1px solid #9A9A9A",
                       ...(errors.email && {
                         border: "1px solid #D32F2F",
                       }),
@@ -140,7 +125,7 @@ export default function ForgotPassword(props) {
                       }),
                     }}
                   >
-                    <TextField
+                    <CustomTextField
                       focused
                       id="email"
                       name="email"
@@ -150,12 +135,6 @@ export default function ForgotPassword(props) {
                       placeholder="Enter Your Email"
                       fullWidth
                       outline="none"
-                      InputProps={{
-                        classes: {
-                          notchedOutline: compStyles.noBorder,
-                          input: compStyles.innerInputStyles,
-                        },
-                      }}
                       onChange={handleChange}
                       onBlur={handleBlur}
                     />
@@ -176,8 +155,8 @@ export default function ForgotPassword(props) {
                     flexDirection: "column",
                   }}
                 >
-                  <Button
-                    disabled={!isValid}
+                  <BlueAuthButton
+                    disabled={!(dirty && isValid)}
                     type="submit"
                     sx={{
                       color: "white",
@@ -186,10 +165,9 @@ export default function ForgotPassword(props) {
                       height: "55px",
                     }}
                     className="title"
-                    classes={{ root: compStyles.buttonBackground }}
                   >
                     CONTINUE
-                  </Button>
+                  </BlueAuthButton>
 
                   <DialogContentText
                     sx={{
@@ -199,9 +177,38 @@ export default function ForgotPassword(props) {
                       textAlign: "center",
                     }}
                   >
-                    <span style={{ color: "#9A9A9A" }}>
-                      {"2023 Equal Travel Project. All rights reserved."}
+                    <span>
+                      {
+                        "By signing in and creating an account, you agree with our "
+                      }
                     </span>
+                    <a
+                      href="/terms-and-conditions"
+                      target="_blank"
+                      style={{
+                        my: 2,
+                        color: "#3B79C9",
+                        display: "inline-block",
+                        textDecoration: "underline",
+                        padding: "0px 5px",
+                      }}
+                    >
+                      <span>{"Terms & Conditions"}</span>
+                    </a>
+                    <span>{" and "}</span>
+                    <a
+                      href="/privacy-policy"
+                      target="_blank"
+                      style={{
+                        my: 2,
+                        color: "#3B79C9",
+                        display: "inline-block",
+                        textDecoration: "underline",
+                        padding: "0px 5px",
+                      }}
+                    >
+                      <span>{"Privacy statement."}</span>
+                    </a>
                   </DialogContentText>
                 </DialogActions>
               </Grid>

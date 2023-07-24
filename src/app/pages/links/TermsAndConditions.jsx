@@ -1,44 +1,29 @@
 import { Grid, Typography } from "@mui/material";
 import Layout from "../Layout";
-import makeStyles from "@mui/styles/makeStyles";
+import styled from "@emotion/styled";
 
-const useStyles = makeStyles(() => ({
-    pageTitle: {
-        fontFamily: "Montserrat !important",
-        fontWeight: "700 !important",
-        fontSize: "2.875rem !important",
-        color: "#484848",
-        textTransform: "uppercase"
-        },
-    pageSubtitle: {
-        fontFamily: "Montserrat !important",
-        fontWeight: "700 !important"
-    },
-    emphasizeText: {
-        fontWeight: "700 !important"
-    },
-    verticalSpacing: {
-        padding: "20px 0px"
-    },
-    bottomSpacing: {
-        paddingBottom: "20px"
-    },
-    email: {
-        color: "#3B79C9",
-        cursor: "pointer"
-    }
-  }))
+const PageTitle = styled(Typography)`
+  font-family: Montserrat !important;
+  font-weight: 700 !important;
+  font-size: 2.875rem !important;
+  color: #484848;
+  text-transform: uppercase;
+`;
+
+const PageSubTitle = styled(Typography)`
+  font-family: Montserrat !important;
+  font-weight: 700 !important;
+`;
 
 export default function TermsAndConditions(){
-    const compStyles = useStyles();
     return (
         <Layout topMargin="true" appBarStyle="primary">
             <Grid sx={{ padding: "10px 44px 20px", color: "#9A9A9A", lineHeight: "26px" }}>
-                <Typography classes={{root: compStyles.pageTitle }}> Terms and Conditions </Typography>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <PageTitle> Terms and Conditions </PageTitle>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`TERMS AND CONDITIONS`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`By visiting and using (hereinafter the “website”) equaltravelproject.com, you accept and agree to be bound by these Terms and Conditions including our Disclaimer and Privacy Policy posted on the website and incorporated herein by reference.`}
                     </div>
@@ -50,31 +35,31 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`INTENDED AGE`}
-                    </Typography>
+                    </PageSubTitle>
                     {`All information and content on this website are intended for individuals over the age of 18. Children, as defined in our Privacy Policy, are prohibited from using this website.`}
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`PRIVACY POLICY`}
-                    </Typography>
+                    </PageSubTitle>
                     {`We are dedicated to respecting the privacy of your personal information. Your acceptance of our Privacy Policy is expressly incorporated into these Terms and Conditions. Please review our Privacy Policy for more information.`}
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`DISCLAIMER`}
-                    </Typography>
+                    </PageSubTitle>
                     {`Your acceptance of our Disclaimer is expressly incorporated into these Terms and Conditions. Please review the Disclaimer for more information.`}
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`MANDATORY ARBITRATION AND GOVERNING LAW`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`You expressly waive any legal claims you may have now or in the future arising from or related to the website and our products/services. In the event of a dispute, claim, or controversy arising from or relating to your use of this website, the terms and conditions shall be construed in accordance with the laws of the state of Florida, United States.`}
                     </div>
@@ -86,10 +71,10 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`INTELLECTUAL PROPERTY`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`All content on this website including but not limited to text, posts, logos, marks, graphics, files, materials, services, products, videos, audio, applications, computer code, designs, downloads and all other information here (collectively, the “Content”) is owned by us and is protected by copyright, trademark and other intellectual property and unfair competition laws with the exception of any content from others that we are lawfully permitted to use. You are granted a limited revocable license to print or download Content from the website for your own personal, non-commercial, non-transferrable, informational and educational use only while ensuring it’s not in violation of any copyright, trademark, and intellectual property or proprietary rights.`}
                     </div>
@@ -98,10 +83,10 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`USER CONTENT AND LAWFUL USE OF THE WEBSITE`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`For any Content or information that you upload, display, post, transmit, send, email or submit to us on the website or on any of our social media sites, you warrant that you are the owner of that Content or have express permission from the owner of those intellectual property rights to use and distribute that Content to us.`}
                     </div>
@@ -121,10 +106,10 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`THIRD-PARTY LINKS`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`The website may contain links to third-party websites or resources for your convenience. We may serve as an affiliate for some of these third-party websites by offering or advertising their products or services on the website; however, we do not own or control these third-party websites. Once you click on a third-party link and leave this website, you are no longer bound by our terms and conditions.`}
                     </div>
@@ -133,10 +118,10 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`USE OF OUR PAID AND FREE PRODUCTS`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`On this website, we may provide free products for download as well as sell paid courses, programs, physical or digital products, and any other related materials (collectively, "products"). All of our products and/or services, including all content, are copyright protected under US and international copyright laws. You are granted a limited revocable license to print or download Content from our digital products for your own personal, non-commercial, non-transferrable, informational and educational use only while ensuring it’s not in violation of any copyright, trademark, and intellectual property or proprietary rights. Copying or storing our content for other than personal use is expressly prohibited without our prior written consent.`}
                     </div>
@@ -145,35 +130,35 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`TERMINATION`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`We reserve the right in our sole discretion to refuse, remove, restrict your access, revoke and terminate your use of our website including any or all Content published by you or us at any time for any reason, without notice.`}
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`NO REFUNDS, RETURNS OR EXCHANGES ALLOWED`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`All sales of products and/or services on this website are final. There are no refunds, returns, or exchanges allowed. There will be no exceptions. Please carefully review all products before purchasing to ensure that you have purchased the correct product. We truly believe in giving more than receiving and each of our products and services is designed by keeping this core principle in mind. The prices are intentionally kept reasonably low in price as compared to market value to give you the tools and information you need at an affordable price. Failure to use the product you purchased from us does not give you the right to refuse payment of any associated charges.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`NO WARRANTIES`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`ALL CONTENT, INFORMATION, PRODUCTS AND/OR SERVICES ON THE WEBSITE ARE “AS IS” AND “AS AVAILABLE” BASIS WITHOUT ANY REPRESENTATIONS OR WARRANTIES OF ANY KIND INCLUDING THE WARRANTIES OF MERCHANTABILITY OR FITNESS FOR ANY PURPOSE, EXPRESS OR IMPLIED TO THE FULL EXTENT PERMISSIBLE BY LAW. COMPANY MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONTENT, INFORMATION, MATERIALS, PRODUCTS AND/OR SERVICES PROVIDED ON THIS WEBSITE. COMPANY MAKES NO WARRANTIES THAT THE WEBSITE WILL PERFORM OR OPERATE TO MEET YOUR REQUIREMENTS OR THAT THE INFORMATION PRESENTED HERE WILL BE COMPLETE, CURRENT OR ERROR-FREE. COMPANY DISCLAIMS ALL WARRANTIES, IMPLIED AND EXPRESS FOR ANY PURPOSE TO THE FULL EXTENT PERMITTED BY LAW.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`LIMITATION OF LIABILITY`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`You agree that under no circumstances, we and/or our officers, employees, successors, shareholders, joint venture partners or anyone else working with us shall be liable for any direct, indirect, incidental, consequential, equitable, special, punitive, exemplary or any other damages resulting from your use of this website including but not limited to all the content, information, products, services and graphics presented here.`}
                     </div>
@@ -188,64 +173,64 @@ export default function TermsAndConditions(){
                     </div>
                 </div>
 
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`INDEMNIFICATION`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`You agree to indemnify and hold the Company and/or its officers, employees, successors, shareholders, joint venture partners or anyone else working with us harmless from all losses, claims, damages, demands, actions, suits, proceedings or judgments, including costs, expenses and reasonable attorneys' fees ("Liabilities") assessed against or otherwise incurred by you arising, in whole or in part, from: (a) actions or omissions, whether done negligently or otherwise, by you, your agents, directors, officers, employees or representatives; (b) all your actions and use of the website including purchasing products and services; (c) violation of any laws, rules, regulations or ordinances by you; or (d) violation of any terms and conditions of this website by you or anyone related to you; e) infringement by you or any other user of your account of any intellectual property or other rights of anyone. The Company will notify you promptly of any such claims or liability and reserves the right to defend such claim, liability or damage at your expense. You shall fully cooperate and provide assistance to us if requested, without any cost, to defend any such claims.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`WAIVER OF CLASS ACTIONS`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`You agree that any dispute arising from or related to this Agreement will be resolved solely between you and the Company. You waive your right to bring a class action against us and agree not to bring claims against us as a member of a class or as a representative.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`ENTIRE AGREEMENT`}
-                    </Typography>
-                    <div className={`${compStyles.bottomSpacing}`}>
+                    </PageSubTitle>
+                    <div style={{ paddingBottom: "20px" }}>
                         {`These Terms and Conditions along with our Privacy Policy and Disclaimer constitute the entire agreement between you and us with respect to this website. It supersedes all prior or contemporaneous communications, discussions, negotiations or proposals we may have had with you whether electronic, oral or written.`}
                     </div>
                     <div>
                         {`A printed version of this entire agreement including the Privacy Policy and Disclaimer and of any notice given in electronic form shall be admissible in judicial or administrative proceedings with respect to this website to the same extent and given the same effect as other business contracts and documents kept and maintained in printed form.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`SEVERABILITY`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`If any provision in these Terms and Conditions is deemed by a court, regulatory authority or other public or private tribunal of competent jurisdiction to be invalid or unenforceable, such provision is deemed to have been omitted from this Agreement. The remainder of this Agreement remains in full force and effect, and is modified to any extent necessary to give such force and effect to the remaining provisions, but only to such extent.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`MODIFICATIONS`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`Company reserves the right, in its sole discretion and without notice, to (a) revise these Terms and Conditions; (b) modify the website and/or any services or products it offers; and (c) discontinue the website and/or products or services at any time. Any changes to these terms will take effect immediately. You agree to review these Terms and Conditions and any other online policies posted on the website on a regular basis to be aware of any changes. You agree to be bound by the revision if you continue to use or access the website after these modifications.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`ACKNOWLEDGEMENT`}
-                    </Typography>
+                    </PageSubTitle>
                     <div>
                         {`By using any of our products, services or accessing the site, you acknowledge that you have read and agree to be bound by these terms and conditions.`}
                     </div>
                 </div>
-                <div className={`${compStyles.bottomSpacing}`}>
-                    <Typography classes={{ root: compStyles.pageSubtitle}}>
+                <div style={{ paddingBottom: "20px" }}>
+                    <PageSubTitle>
                         {`CONTACT`}
-                    </Typography>
-                    <div className={`${compStyles.bottomSpacing}`}>
+                    </PageSubTitle>
+                    <div style={{ paddingBottom: "20px" }}>
                         {`For any questions, please contact us at `}
-                        <span className={`${compStyles.email}`}>info@equaltravelproject.com</span>
+                        <span style={{ color: "#3B79C9", cursor: "pointer"}}>info@equaltravelproject.com</span>
                     </div>
                 </div>
             </Grid>

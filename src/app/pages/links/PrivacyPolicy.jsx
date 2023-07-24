@@ -1,32 +1,45 @@
 import { Grid, Typography } from "@mui/material";
 import Layout from "../Layout";
-import { makeStyles } from "@mui/styles";
+import styled from "@emotion/styled";
 
-const useStyles = makeStyles(() => ({
-    pageTitle: {
-        fontFamily: "Montserrat !important",
-        fontWeight: "700 !important",
-        fontSize: "2.875rem !important",
-        color: "#484848",
-        textTransform: "uppercase"
-        },
-    pageSubtitle: {
-        fontFamily: "Montserrat !important",
-        fontWeight: "700 !important"
-    },
-    emphasizeText: {
-        fontWeight: "700 !important"
-    },
-    verticalSpacing: {
-        padding: "20px 0px"
-    },
-    bottomSpacing:{
-        paddingBottom: "20px"
-    }
-  }))
+const PageTitle = styled(Typography)`
+  font-family: Montserrat !important;
+  font-weight: 700 !important;
+  font-size: 2.875rem !important;
+  color: #484848;
+  text-transform: uppercase;
+`;
+
+const PageSubTitle = styled(Typography)`
+  font-family: Montserrat !important;
+  font-weight: 700 !important;
+`;
+
+const compStyles = {
+  pageTitle: {
+    fontFamily: "Montserrat !important",
+    fontWeight: "700 !important",
+    fontSize: "2.875rem !important",
+    color: "#484848",
+    textTransform: "uppercase",
+  },
+  pageSubtitle: {
+    fontFamily: "Montserrat !important",
+    fontWeight: "700 !important",
+  },
+  emphasizeText: {
+    fontWeight: "700 !important",
+  },
+  verticalSpacing: {
+    padding: "20px 0px",
+  },
+  bottomSpacing: {
+    paddingBottom: "20px",
+  },
+};
 
 export default function PrivacyPolicy(){
-    const compStyles = useStyles();
+    // const compStyles = useStyles();
 
     return (
       <Layout topMargin={true} appBarStyle="primary">
@@ -37,10 +50,10 @@ export default function PrivacyPolicy(){
             lineHeight: "26px",
           }}
         >
-          <Typography classes={{ root: compStyles.pageTitle }}>
+          <PageTitle>
             {" "}
             Privacy Policy{" "}
-          </Typography>
+          </PageTitle>
           <div className={`${compStyles.verticalSpacing}`}>
             {`Equal Travel Project is dedicated to respecting the privacy of your personal information. This Privacy Policy describes what information is collected from you on equaltravelproject.com (hereinafter the “website”) and how it is used. This Privacy Policy applies to this website and any products or services that we offer that link to this policy. The term “you” refers to anyone who uses, visits, or views the website.`}
           </div>
@@ -50,17 +63,17 @@ export default function PrivacyPolicy(){
             {`By visiting and using the website, you accept and agree to be bound by this privacy policy. Your continued use of the website after posting of any changes to our Privacy Policy constitutes your acceptance of those changes and updates. You must not access or use the website if you do not wish to be bound by this Privacy Policy.`}
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`CHILDREN’S PRIVACY`}{" "}
-            </Typography>
+            </PageSubTitle>
             {`We respect the privacy of children and “child” means an individual under the age of 13. This policy is in accordance with the Children's Online Privacy Protection Act (“COPPA”). This website's information and content are only intended for people over the age of 18. This website is not intended for children under the age of 13. Without prior parental or guardian consent, we do not knowingly collect, use, or disclose personal information from children under the age of 13. If you believe that personal information was collected without parental or guardian consent from a child under the age of 13, please contact us to have that information deleted.`}
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`WHAT INFORMATION WE COLLECT AND HOW IT IS USED`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`When you access the website, you may provide certain personally identifiable information including but not limited to your name, email address, phone number, address, avatar image, credit card information when you make a purchase on the website (“personal information”).`}
             </div>
@@ -72,10 +85,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`GOOGLE ANALYTICS`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`Just like other websites, this website automatically collects certain information about you through Log Data and Google Analytics. Log Data is information about your computer’s Internet Protocol Address, which is your “IP” address, browser information, Internet Service Provider’s information, your operating system, and your browser type. Similarly, Google Analytics collects certain information about your location, browsing history, the pages you visit, the equipment you used to access the website, traffic patterns, and other general patterns related to your use of the website.`}
             </div>
@@ -84,10 +97,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`COMMENTS AND SOCIAL MEDIA`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`If you leave a comment, the comment and its metadata are retained indefinitely. This is so we can recognize and approve any follow-up comments automatically instead of holding them in a moderation queue. When you leave a comment, your name, email address and website/organization name is not shared with a third party and may be used to communicate with you.`}
             </div>
@@ -99,10 +112,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`USE OF COOKIES`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`The website may use cookies to facilitate your use of the website. Cookies are files with small amounts of data including an anonymous unique identifier that a website sends to your computer’s hard drive when you are viewing the website. Just like other websites, we automatically collect some non-personally identifiable information including but not limited to your IP address, geographic location, language preference, date and time of visitors.`}
             </div>
@@ -123,10 +136,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`USE OF WEB BEACONS AND PIXELS`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`In conjunction with the use of cookies, third parties may also use web beacons, which are also known as clear GIFs, web bugs or pixel tags to collect general information about your use of our website. They monitor user activity and are used to track customer behavior data. This information may be relevant to third parties such as the ad networks used on our website to tailor the advertising based on your behavior and interests.`}
             </div>
@@ -138,10 +151,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`THIRD-PARTY LINKS AND USE`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`We may include, offer or advertise third party links, products or services on the website. Once you click on a third-party link and leave this website, you are no longer bound by our Privacy Policy and Terms and Conditions.`}
             </div>
@@ -156,10 +169,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`DISCLOSURE OF YOUR INFORMATION`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`As a general rule, we do not disclose your personal information to third parties without your consent with the exception of the following circumstances:`}
             </div>
@@ -184,10 +197,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`EMAIL MARKETING`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`You have the option of opting in or unsubscribing from our email list. By subscribing and opting in, you agree to receive newsletters, updates, messages, promotional materials and any other content related to this website. When you send an email, your email message along with email address and responses are saved for communication purposes with you. This information is kept confidential and we do not share, sell or trade your email information with third parties except as otherwise stated in this privacy policy.`}
             </div>
@@ -199,10 +212,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`OPT-OUT`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`We comply with the CAN-SPAM Act of 2003 and do not spam or send misleading information. Should you wish to no longer receive communication from us, you have the option of unsubscribing by clicking “unsubscribe” at the bottom of the email we send to you or by contacting us.`}
             </div>
@@ -215,10 +228,10 @@ export default function PrivacyPolicy(){
           </div>
 
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`GDPR VISITOR RIGHTS (FOR EU AND UK CUSTOMERS AND VISITORS)`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`If you are located in the European Union (“EU”) or the United Kingdom (“UK”), you are entitled to certain rights and information listed below under the General Data Protection Regulation (“GDPR).`}
             </div>
@@ -267,10 +280,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`LEGAL BASIS FOR PROCESSING DATA UNDER THE GDPR`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`Under the GDPR, we may process your data under the following legal basis:`}
             </div>
@@ -316,10 +329,10 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`YOUR STATE PRIVACY RIGHTS`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`State consumer privacy laws may give their residents additional rights in terms of how we use their personal information. These privacy rights vary depending on the local laws that apply to you.`}
             </div>
@@ -353,10 +366,10 @@ export default function PrivacyPolicy(){
           </div>
 
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`CALIFORNIA CONSUMER PRIVACY ACT (CCPA) AND CALIFORNIA PRIVACY RIGHTS ACT (CPRA) COMPLIANCE AND YOUR LEGAL RIGHTS`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`If you live in California, you have additional rights under California law, and we comply with the CCPA and CPRA because we may have visitors from California on our website. Here are your legal rights under CCPA/CPRA:`}
               <ol>
@@ -392,10 +405,10 @@ export default function PrivacyPolicy(){
           </div>
 
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {" "}
               {`CATEGORIES OF PERSONAL INFORMATION COLLECTED AND DISCLOSED FOR A BUSINESS PURPOSE`}{" "}
-            </Typography>
+            </PageSubTitle>
             <div>
               {`The types of personal information we collect and how we use it have already been listed above, but under the CCPA/CPRA, the following categories of personal information may have been collected and disclosed for business purposes in the previous 12 months:`}
               <ul>
@@ -439,9 +452,9 @@ export default function PrivacyPolicy(){
             </div>
           </div>
           <div className={`${compStyles.bottomSpacing}`}>
-            <Typography classes={{ root: compStyles.pageSubtitle }}>
+            <PageSubTitle>
               {`HOW WE COLLECT YOUR PERSONAL INFORMATION AND FOR WHAT PURPOSE`}
-            </Typography>
+            </PageSubTitle>
             <div className={`${compStyles.bottomSpacing}`}>
               {`We collect this personal information directly from you, from your browser or device, use of cookies, service providers, our business partners, affiliates, or from third parties. We do not sell your personal information to third parties.`}
             </div>

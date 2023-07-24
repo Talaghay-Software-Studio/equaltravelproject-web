@@ -8,6 +8,9 @@ export default defineConfig({
       include: "**/*.jsx",
     })
   ],
+  optimizeDeps: {
+    include: ['@mui/icons-material'],
+  },
   server: {
     host: true,
     port: 80
