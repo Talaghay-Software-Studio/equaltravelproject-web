@@ -170,7 +170,7 @@ export default function Signup(props) {
           email_add: values.email,
           password: values.password,
           accessibility_needs: (values.accessibilityNeeds).toString(),
-          user_type: "1" //Default 1 for Guest Account
+          user_type: 1 //Default 1 for Guest Account
         },
         {
           headers: {
