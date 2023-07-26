@@ -85,15 +85,20 @@ export default function Login(props) {
           setAuth({ email, password, token });
           
 
-          return axios.post("/api/v1/token", {
-           token: token
+          return axios.get("api/v1/auth/verify", {
+            headers: {
+              "Authorization": `Bearer ${token}`
+            }
           });
         }
       }).then((response) => {
-        if(response?.data?.message == "Token is valid"){
-          const user = response?.data?.user;
+        
+        if(response.status == 200){
+          const { UserInfo } = response?.data["decodedToken"] ?? null;
           setIsLoading(false);
-          handleUserLogin("success", user);
+
+          localStorage.setItem("user", JSON.stringify(UserInfo));
+          handleUserLogin("success");
 
           navigate(from, { replace: true });
         }
@@ -112,8 +117,8 @@ export default function Login(props) {
       });
   };
 
-  const handleUserLogin = (status, user) => {
-    props.handleUserLogin(status, user);
+  const handleUserLogin = (status) => {
+    props.handleUserLogin(status);
   };
   
   return (

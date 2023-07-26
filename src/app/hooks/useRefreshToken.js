@@ -2,12 +2,11 @@ import axios from "../api/axios";
 import useAuth from "./useAuth";
 
 const useRefreshToken = () => {
-    const { auth, setAuth } = useAuth();
+    const { setAuth } = useAuth();
 
     const refresh = async () => {
         const response = await axios.get('/api/v1/login/refresh', {
-            email: auth.email,
-            password: auth.password
+            withCredentials: true
         });
 
         setAuth( prev => {

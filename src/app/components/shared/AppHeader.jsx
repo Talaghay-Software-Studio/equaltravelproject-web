@@ -83,19 +83,20 @@ const CustomHostButton = styled(Button)`
 `;
 
 export default function AppHeader(props) {
-  const navigate = useNavigate();
-  
+  const navigate = useNavigate(); 
   const isAppBarDynamic = props.appBarStyle == "dynamic";
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const [appBarColored, setAppBarColored] = React.useState(false);
-  const [user, setUser] = React.useState({...props.userDetails});
+  const [user, setUser] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { auth, setAuth } = React.useContext(AuthContext);
+  const { setAuth } = React.useContext(AuthContext);
 
   React.useEffect(() => {
-    setUser(props.userDetails);
-  }, [props.userDetails]);
+    const userDetails = JSON.parse(localStorage.getItem("user"));
+    setUser(userDetails ? userDetails : {});
+  }, [props.isLoggedIn]);
+
   const changeAppBarBG = () => {
     if(window.scrollY >= 80){
       setAppBarColored(true);
@@ -150,6 +151,7 @@ export default function AppHeader(props) {
     navigate({
       pathname: "/",
     });
+    localStorage.removeItem("user");
     setAuth({});
   }
 
@@ -158,8 +160,7 @@ export default function AppHeader(props) {
   };
 
   const setUserAvatar = () => {
-    const { userDetails } = user;
-    const initials = userDetails && userDetails["first_name"][0] + userDetails["last_name"][0];
+    const initials = Object.keys(user).length > 0 ? `${user["first_name"][0]}${user["last_name"][0]}` : null;
     return initials ? (
       <Avatar sx={{ backgroundColor: "#C2C6CC", fontWeight: 600 }}>
         {initials}
@@ -238,7 +239,7 @@ export default function AppHeader(props) {
             <Tooltip title="Open Menu">
               <IconButton
                 onClick={handleOpenUserMenu}
-                sx={{ p: 0 }}
+                sx={{ padding: "6px 18px", margin: "2px 13px", width: "24px" }}
                 size="large"
                 aria-label="account of current user"
                 aria-controls="menu-appbar"
@@ -265,7 +266,7 @@ export default function AppHeader(props) {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {auth?.token &&
+              {Object.keys(user).length > 0 &&
                 authenticatedMenu.map((menu) => (
                   <MenuItem
                     key={menu.id}
@@ -275,7 +276,7 @@ export default function AppHeader(props) {
                   </MenuItem>
                 ))}
 
-              {!auth?.token &&
+              {!(Object.keys(user).length > 0) &&
                 menu.map((menu) => (
                   <MenuItem
                     key={menu.id}
