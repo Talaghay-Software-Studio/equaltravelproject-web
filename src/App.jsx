@@ -12,6 +12,7 @@ import AddPropertyPage from './app/pages/AddPropertyPage'
 import Unauthorized from './app/pages/Unauthorized';
 import Account from './app/pages/Account';
 import Blogs from './app/pages/Blogs';
+import AddBlog from './app/components/blogs/AddBlog';
 // import RequireAuth from './app/pages/RequireAuth';
 // import PersistLogin from './app/pages/PersistLogin';
 
@@ -57,6 +58,7 @@ function App() {
       <Route path="/host-page" element={<HostPage />} />
       <Route path="/add-property" element={<AddPropertyPage />} />
       <Route path="/blogs" element={<Blogs />} />
+      <Route path="/add-blog" element={<AddBlog />} />
     </Routes>
   );
 }
