@@ -10,18 +10,14 @@ import AuthModal from "../components/auth-modals/AuthModal"
 
 export default function Layout(props) {
     const [showAuth, setShowAuth] = useState(false);
-    const [userDetails, setUserDetails] = useState({});
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
     const showAuthModal = (show) => {
       setShowAuth(show);
     };
 
-    const setUser = (isLoggedIn, user) => {
-      if (isLoggedIn) {
-        setUserDetails(user);
-      } else {
-        setUserDetails("");
-      }
+    const setUser = (isLoggedIn) => {
+     setIsLoggedIn(isLoggedIn);
     };
 
     return (
@@ -32,7 +28,7 @@ export default function Layout(props) {
         >
           <AppHeader
             appBarStyle={props.appBarStyle}
-            userDetails={userDetails}
+            isLoggedIn={isLoggedIn}
             hideBecomeHostBtn={props.hideBecomeHostBtn}
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
@@ -41,7 +37,7 @@ export default function Layout(props) {
           <AuthModal
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
-            setUser={(bool, initials) => setUser(bool, initials)}
+            setUser={(bool) => setUser(bool)}
           />
 
           <div style={{ marginTop: props.topMargin ? "85px" : "0px" }}>
