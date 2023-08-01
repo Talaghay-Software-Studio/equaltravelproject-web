@@ -22,21 +22,23 @@ export default function AddPropertyPage(){
 
   const [showSubmit, setShowSubmit] = React.useState(false);
   const [contentState, setContentState] = React.useState("propertyCategory");
-    // const [propertyState, setPropertyState] = React.useState({
-    //     type: "",
-    //     address: {
-    //         country: "",
-    //         street: "",
-    //         unit: "",
-    //         city: "",
-    //         district: "",
-    //         zipCode: "",
-    //         province: ""
-    //     },
-    //     facilities: {
-            
-    //     }
-    // });
+    const [propertyState, setPropertyState] = React.useState({
+        category: "",
+        type: "",
+        address: {
+            country: "",
+            street: "",
+            unit: "",
+            city: "",
+            district: "",
+            zipCode: "",
+            province: ""
+        },
+        facilities: {
+            bedroom: "",
+            parking: ""
+        }
+    });
     const handleBack = () => {
       let type = "";
       switch (contentState) {
@@ -142,6 +144,13 @@ export default function AddPropertyPage(){
 
     };
 
+    const handleChange = (propertyState, value) => {
+      setPropertyState((prevState) => ({
+        ...prevState,
+        [propertyState]: value
+      }));
+    }
+
     return (
       <Layout
         topMargin={true}
@@ -159,8 +168,22 @@ export default function AddPropertyPage(){
         >
           {/* Main Display */}
           <Grid sx={{ paddingX: "80px" }}>
-            {contentState == "propertyCategory" && <SelectPropertyCategory />}
-            {contentState == "propertyType" && <SelectPropertyType />}
+            {contentState == "propertyCategory" && (
+              <SelectPropertyCategory
+                value={propertyState.category}
+                valueChanged={(state, value) => {
+                  handleChange(state, value);
+                }}
+              />
+            )}
+            {contentState == "propertyType" && (
+              <SelectPropertyType
+                value={propertyState.type}
+                valueChanged={(state, value) => {
+                  handleChange(state, value);
+                }}
+              />
+            )}
             {contentState == "propertyAddress" && <SetPropertyAddress />}
             {contentState == "propertyFacilities" && <AddFacilities />}
             {contentState == "propertyAmenities" && <AddAmenities />}

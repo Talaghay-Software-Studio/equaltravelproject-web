@@ -14,8 +14,8 @@ const propertyTypes = [
   }
 ];
 
-export default function SelectPropertyType(){
-    const [selectedType, setSelectedType] = React.useState(null);
+export default function SelectPropertyType(props){
+    const [selectedType, setSelectedType] = React.useState(props.value);
 
     const refType = useRef(selectedType);
 
@@ -25,6 +25,7 @@ export default function SelectPropertyType(){
 
     const handleOptionSelect = (typeId) => {
       setSelectedType(typeId);
+      props.valueChanged("type", typeId);
     };
 
     return (

@@ -28,8 +28,8 @@ const propertyCategory = [
     path: "/assets/icons/svg/resort.svg",
   },
 ];
-export default function SelectPropertyCategory() {
-  const [selectedType, setSelectedType] = React.useState(null);
+export default function SelectPropertyCategory(props) {
+  const [selectedType, setSelectedType] = React.useState(props.value);
 
   const refType = useRef(selectedType);
 
@@ -39,6 +39,8 @@ export default function SelectPropertyCategory() {
 
   const handleOptionSelect = (typeId) => {
     setSelectedType(typeId);
+
+    props.valueChanged("category", typeId);
   };
 
   return (
