@@ -188,22 +188,24 @@ export default function AppHeader(props) {
         position="fixed"
       >
         <Toolbar disableGutters sx={{ margin: "0px 40px 0px 32px" }}>
-          <Link to="/">
+          <Link to="/" style={{ display: "flex", marginRight: "auto" }}>
             <AppLogo logoHeight="75" sx={{ display: "flex", mr: 1 }} />
           </Link>
 
-          <Box sx={{ display: "flex", ml: "auto" }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                <Typography sx={{ textTransform: "initial" }}>
-                  {page}
-                </Typography>
-              </Button>
-            ))}
-          </Box>
+          {props.showPagesLinks && (
+            <Box sx={{ display: "flex" }}>
+              {pages.map((page) => (
+                <Button
+                  key={page}
+                  sx={{ my: 2, color: "white", display: "block" }}
+                >
+                  <Typography sx={{ textTransform: "initial" }}>
+                    {page}
+                  </Typography>
+                </Button>
+              ))}
+            </Box>
+          )}
 
           {!props.hideBecomeHostBtn && (
             <CustomHostButton

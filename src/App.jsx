@@ -13,6 +13,7 @@ import Unauthorized from './app/pages/Unauthorized';
 import Account from './app/pages/Account';
 import Blogs from './app/pages/Blogs';
 import AddBlog from './app/components/blogs/AddBlog';
+import BlogPost from './app/components/blogs/BlogPost';
 // import RequireAuth from './app/pages/RequireAuth';
 // import PersistLogin from './app/pages/PersistLogin';
 
@@ -57,8 +58,11 @@ function App() {
       <Route path="/account" element={<Account />} />
       <Route path="/host-page" element={<HostPage />} />
       <Route path="/add-property" element={<AddPropertyPage />} />
-      <Route path="/blogs" element={<Blogs />} />
+
       <Route path="/add-blog" element={<AddBlog />} />
+
+      <Route path="/blogs" element={<Blogs />} />
+      <Route path="/blogs/:id" element={<BlogPost />} />
     </Routes>
   );
 }
