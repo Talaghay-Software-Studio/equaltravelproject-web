@@ -12,7 +12,7 @@ const propertySections = ["Latest on the Property Listing", "Nearby Listed Prope
 
 export default function HomePage(){
     return (
-      <Layout topMargin={false} appBarStyle="dynamic" showBecomeHostBtn={false}>
+      <Layout topMargin={false} appBarStyle="dynamic" showBecomeHostBtn={false} showPagesLinks={true}>
         <Grid
           sx={{
             display: "flex",

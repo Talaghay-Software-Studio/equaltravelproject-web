@@ -30,6 +30,7 @@ export default function Layout(props) {
             appBarStyle={props.appBarStyle}
             isLoggedIn={isLoggedIn}
             hideBecomeHostBtn={props.hideBecomeHostBtn}
+            showPagesLinks={props.showPagesLinks}
             showAuth={showAuth}
             showAuthModal={(bool) => showAuthModal(bool)}
           />
@@ -58,4 +59,5 @@ Layout.propTypes = {
   topMargin: PropTypes.bool,
   appBarStyle: PropTypes.string,
   hideBecomeHostBtn: PropTypes.bool,
+  showPagesLinks: PropTypes.bool,
 };

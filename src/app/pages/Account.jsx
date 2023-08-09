@@ -6,7 +6,8 @@ import React from "react";
 import ReviewList from "../components/rewiew/ReviewList";
 import CheckRoundedIcon from "@mui/icons-material/CheckRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
-import BlogList from "../components/blogs/BlogList";
+import BlogCard from "../components/blogs/BlogCard";
+import { useNavigate } from "react-router-dom";
 
 const userReviews = [
   {
@@ -38,11 +39,13 @@ const userReviews = [
   },
 ];
 
-const userBlogs = [{
-  id: 1,
-  title: "Traveling the World with Your Four-Legged Friend",
-  photo: "/assets/img/blog-post.png"
-}];
+const userBlogs = [
+  {
+    id: 1,
+    title: "Traveling the World with Your Four-Legged Friend",
+    thumbnail: "/assets/img/blog-post.png",
+  },
+];
 
 const userDetails = {
   firstname: "John",
@@ -79,6 +82,7 @@ const initialInfo = {
 };
 
 export default function Account(){
+  const navigate = useNavigate();
   const [tabValue, setTabValue] = React.useState(0);
   const [editAccount, setEditAccount] = React.useState(false);
   const [editInfo, setEditInfo] = React.useState(initialInfo);
@@ -117,7 +121,12 @@ export default function Account(){
         {...other}
       >
         {value === index && (
-          <BlogList blogs={userBlogs} />
+          <Grid sx={{ display: "flex", flexDirection: "row", paddingTop: "30px" }}>
+            {userBlogs.length > 0 &&
+              Array(4)
+                .fill(userBlogs[0])
+                .map((blog, ind) => <BlogCard key={ind} blog={blog} />)}
+          </Grid>
         )}
       </div>
     );
@@ -137,6 +146,10 @@ export default function Account(){
   const handleCancelEdit = () => {
     setEditInfo(initialInfo);
     setEditAccount(false);
+  }
+
+  const handleNewBlog = () => {
+    navigate({ pathname: "/add-blog" })
   }
 
 
@@ -270,6 +283,7 @@ export default function Account(){
                     padding: "10px 20px",
                     marginLeft: "5px",
                   }}
+                  onClick={handleNewBlog}
                 >{`New Blog`}</Button>
               </Grid>
               <Grid sx={{}}>
